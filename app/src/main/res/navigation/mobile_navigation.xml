@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/nav_home">
+
+    <fragment
+        android:id="@+id/nav_home"
+        android:name="com.thedramaticcolumnist.appdistributor.ui.home.HomeFragment"
+        android:label="@string/app_name"
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/home_to_logout"
+            app:destination="@id/nav_logout" />
+        <action
+            android:id="@+id/home_to_vendorAddProducts"
+            app:destination="@id/vendorAddProducts" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_order"
+        android:name="com.thedramaticcolumnist.appdistributor.ui.Order.OrderFragment"
+        android:label="@string/menu_gallery"
+        tools:layout="@layout/order_fragment" />
+
+    <fragment
+        android:id="@+id/nav_admin_panel"
+        android:name="com.thedramaticcolumnist.appdistributor.ui.WishList.AdminPanelFragment"
+        android:label="@string/menu_slideshow"
+        tools:layout="@layout/admin_panel_fragment" />
+    <fragment
+        android:id="@+id/nav_account"
+        android:name="com.thedramaticcolumnist.appdistributor.ui.YourAccount.YourAccount"
+        android:label="@string/menu_account"
+        tools:layout="@layout/your_account_fragment" />
+    <fragment
+        android:id="@+id/nav_customer_service"
+        android:name="com.thedramaticcolumnist.appdistributor.ui.CustomerService.CustomerService"
+        android:label="@string/menu_customer_service"
+        tools:layout="@layout/customer_fragment" />
+    <fragment
+        android:id="@+id/nav_category"
+        android:name="com.thedramaticcolumnist.appdistributor.ui.Category.CategoryFragment"
+        android:label="@string/menu_category"
+        tools:layout="@layout/category_fragment" />
+    <fragment
+        android:id="@+id/nav_registration"
+        android:name="com.thedramaticcolumnist.appdistributor.ui.Distributor.RegistratoionFragment"
+        android:label="@string/menu_distributor"
+        tools:layout="@layout/registration_fragment" />
+    <fragment
+        android:id="@+id/nav_products"
+        android:name="com.thedramaticcolumnist.appdistributor.ui.Products.ProductsFragment"
+        android:label="@string/menu_products"
+        tools:layout="@layout/products_fragment" />
+    <fragment
+        android:id="@+id/vendorAddProducts"
+        android:name="com.thedramaticcolumnist.appdistributor.ui.VendorAddPorduct.VendorAddProducts"
+        android:label="Add Products"
+        tools:layout="@layout/vendor_add_products" />
+    <fragment
+        android:id="@+id/nav_setting"
+        android:name="com.thedramaticcolumnist.appdistributor.ui.Setting.Setting"
+        android:label="Settings"
+        tools:layout="@layout/setting" />
+    <fragment
+        android:id="@+id/nav_payment"
+        android:name="com.thedramaticcolumnist.appdistributor.ui.Payments.Payments"
+        android:label="payments"
+        tools:layout="@layout/payments" />
+    <fragment
+        android:id="@+id/nav_add_new_product"
+        android:name="com.thedramaticcolumnist.appdistributor.ui.AddNewProduct.AddNewProduct"
+        android:label="Add new product"
+        tools:layout="@layout/add_new_product" />
+    <fragment
+        android:id="@+id/nav_message"
+        android:name="com.thedramaticcolumnist.appdistributor.ui.Messages.Message"
+        android:label="Messages"
+        tools:layout="@layout/message" />
+    <fragment
+        android:id="@+id/nav_dash"
+        android:name="com.thedramaticcolumnist.appdistributor.ui.Dashboard.Dashboard"
+        android:label="Dashboard"
+        tools:layout="@layout/dashboard" />
+    <fragment
+        android:id="@+id/nav_logout"
+        android:name="com.thedramaticcolumnist.appdistributor.ui.Logout.Logout"
+        android:label="Logout"
+        tools:layout="@layout/logout" />
+</navigation>

@@ -40,7 +40,7 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initAllComponents()
-        loadUrl("https://thedramaticcolumnist.com/store-manager/")
+        //loadUrl("https://thedramaticcolumnist.com/store-manager/")
     }
 
     private fun initAllComponents() {

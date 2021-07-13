@@ -23,4 +23,17 @@
     <string name="menu_messages">Messages</string>
     <string name="menu_dash">Dashboard</string>
     <string name="logout">Logout</string>
+
+    <string-array name="categories">
+        <item>Category</item>
+        <item>categories 2</item>
+        <item>categories 3</item>
+        <item>categories 4</item>
+    </string-array>
+    <string-array name="sub_categories">
+        <item>Sub-Category</item>
+        <item>Sub Categories 2</item>
+        <item>Sub Categories 3</item>
+        <item>Sub Categories 4</item>
+    </string-array>
 </resources>

@@ -79,7 +79,7 @@ class HomeScreen : AppCompatActivity(), View.OnClickListener {
         when (v?.id) {
             R.id.fab -> {
                 navController.navigateUp()
-                navController.navigate(R.id.home_to_vendorAddProducts)
+                navController.navigate(R.id.home_to_AddProducts)
             }
         }
     }

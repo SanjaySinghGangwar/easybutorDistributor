@@ -14,8 +14,8 @@
             android:id="@+id/home_to_logout"
             app:destination="@id/nav_logout" />
         <action
-            android:id="@+id/home_to_vendorAddProducts"
-            app:destination="@id/vendorAddProducts" />
+            android:id="@+id/home_to_AddProducts"
+            app:destination="@id/nav_add_new_product" />
     </fragment>
 
     <fragment
@@ -73,7 +73,11 @@
         android:id="@+id/nav_add_new_product"
         android:name="com.thedramaticcolumnist.appdistributor.ui.AddNewProduct.AddNewProduct"
         android:label="Add new product"
-        tools:layout="@layout/add_new_product" />
+        tools:layout="@layout/add_new_product" >
+        <action
+            android:id="@+id/add_new_product_to_nav_home"
+            app:destination="@id/nav_home" />
+    </fragment>
     <fragment
         android:id="@+id/nav_message"
         android:name="com.thedramaticcolumnist.appdistributor.ui.Messages.Message"

@@ -48,7 +48,7 @@ class VendorAddProducts : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initAllComponent()
-        loadUrl("https://thedramaticcolumnist.com/store-manager/products-manage/")
+        //loadUrl("https://thedramaticcolumnist.com/store-manager/products-manage/")
     }
 
     private fun initAllComponent() {

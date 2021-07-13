@@ -4,7 +4,10 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import com.thedramaticcolumnist.appdistributor.databinding.SplashScreenBinding
+import com.thedramaticcolumnist.appdistributor.ui.Login.Login
 import java.util.*
 import kotlin.concurrent.schedule
 
@@ -21,9 +24,16 @@ class SplashScreen : AppCompatActivity() {
 
     private fun moveToNextPage() {
         Timer().schedule(5000) {
-            intent = Intent(this@SplashScreen, HomeScreen::class.java)
-            startActivity(intent)
-            finish()
+            val user = Firebase.auth.currentUser
+            if (user != null) {
+                intent = Intent(this@SplashScreen, HomeScreen::class.java)
+                startActivity(intent)
+                finish()
+            } else {
+                intent = Intent(this@SplashScreen, Login::class.java)
+                startActivity(intent)
+                finish()
+            }
             //overridePendingTransition(R.anim.fadein,R.anim.fadeout);
         }
     }

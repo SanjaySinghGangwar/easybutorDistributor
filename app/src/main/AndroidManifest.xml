@@ -5,6 +5,9 @@
     android:installLocation="preferExternal">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+        tools:ignore="ScopedStorage" />
 
     <application
         android:allowBackup="true"
@@ -14,16 +17,23 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Easybutor"
-
         android:usesCleartextTraffic="true">
         <activity
-            android:name="com.thedramaticcolumnist.appdistributor.ui.HomeScreen"
+            android:name=".ui.SignUp.SignUp"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity" />
+        <activity
+            android:name=".ui.Login.Login"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity" />
+        <activity
+            android:name=".ui.HomeScreen"
             android:label="@string/title_activity_home_screen"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.Easybutor.NoActionBar"
             tools:ignore="LockedOrientationActivity" />
         <activity
-            android:name="com.thedramaticcolumnist.appdistributor.ui.SplashScreen"
+            android:name=".ui.SplashScreen"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity">
             <intent-filter>

@@ -17,7 +17,6 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.fragment.NavHostFragment
 import com.bumptech.glide.Glide
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
@@ -146,39 +145,47 @@ class AddNewProduct : Fragment(), View.OnClickListener {
                 openGallery(8)
             }
             R.id.submit -> {
-                if (isValidText(bind.productName.text.toString().trim(), bind.productName) &&
-                    isValidText(bind.shortDescription.text.toString().trim(),
-                        bind.shortDescription) &&
-                    isValidText(bind.LongDescription.text.toString().trim(),
-                        bind.LongDescription) &&
-                    isValidText(bind.price.text.toString().trim(), bind.price)
+                if (isValidText(bind.productName.text.toString().trim(), bind.productName)
+                    && isValidText(bind.shortDescription.text.toString().trim(),
+                        bind.shortDescription)
+                    &&
+                    isValidText(bind.LongDescription.text.toString().trim(), bind.LongDescription)
+                    && isValidText(bind.price.text.toString().trim(), bind.price)
+                    && isValidText(bind.quantity.text.toString().trim(), bind.quantity
+                    )
                 ) {
                     if (!bind.category.selectedItem.equals("Category")) {
                         if (!bind.subCategory.selectedItem.equals("Sub-Category")) {
-                            val timestamp =
-                                SimpleDateFormat("yyyyMMddHHmmssmsms").format(Date()) + Random().nextInt(
-                                    1000000)
+                            if (!arrayList[0].isNullOrBlank()) {
+                                val timestamp =
+                                    SimpleDateFormat("yyyyMMddHHmmssmsms").format(Date()) + Random().nextInt(
+                                        1000000)
 
-                            hashMap["product_name"] = bind.productName.text.toString().trim()
-                            hashMap["seller"] =
-                                FirebaseAuth.getInstance().currentUser?.uid.toString()
-                            hashMap["short_description"] =
-                                bind.shortDescription.text.toString().trim()
-                            hashMap["long_description"] =
-                                bind.LongDescription.text.toString().trim()
-                            hashMap["price"] = bind.price.text.toString().trim()
-                            hashMap["category"] = bind.category.selectedItem.toString()
-                            hashMap["subCategory"] = bind.category.selectedItem.toString()
-                            hashMap["image"] = arrayList.toString()
+                                hashMap["product_name"] = bind.productName.text.toString().trim()
+                                hashMap["seller"] =
+                                    FirebaseAuth.getInstance().currentUser?.uid.toString()
+                                hashMap["short_description"] =
+                                    bind.shortDescription.text.toString().trim()
+                                hashMap["long_description"] =
+                                    bind.LongDescription.text.toString().trim()
+                                hashMap["price"] = bind.price.text.toString().trim()
+                                hashMap["category"] = bind.category.selectedItem.toString()
+                                hashMap["subCategory"] = bind.category.selectedItem.toString()
+                                hashMap["image"] = arrayList.toString()
+                                hashMap["image_one"] = arrayList[0]
+                                hashMap["quantity"] = bind.quantity.text.toString().trim()
 
-                            FirebaseDatabase.getInstance().reference.child("Products")
-                                .child(timestamp)
-                                .setValue(hashMap)
-                                .addOnSuccessListener {
-                                    mToast(requireContext(), "Added")
-                                    parentFragmentManager.popBackStack()
-                                }
+                                FirebaseDatabase.getInstance().reference.child("Products")
+                                    .child(timestamp)
+                                    .setValue(hashMap)
+                                    .addOnSuccessListener {
+                                        mToast(requireContext(), "Added")
+                                        parentFragmentManager.popBackStack()
+                                    }
 
+                            } else {
+                                mToast(requireContext(), "Please upload a image")
+                            }
                         } else {
                             mToast(requireContext(), "Please select a sub category")
                         }

@@ -1,62 +1,58 @@
-package com.thedramaticcolumnist.appdistributor.ui.Products
+package com.thedramaticcolumnist.appdistributor.ui.Products.ViewCategoryProducts
 
 import android.os.Bundle
+import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.GridLayoutManager
 import com.firebase.ui.database.FirebaseRecyclerAdapter
 import com.firebase.ui.database.FirebaseRecyclerOptions
-import com.thedramaticcolumnist.appdistributor.DataBase.mDatabase.mID
-import com.thedramaticcolumnist.appdistributor.DataBase.mDatabase.mProducts
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
+import com.thedramaticcolumnist.appdistributor.R
+import com.thedramaticcolumnist.appdistributor.Utils.mUtils.mToast
 import com.thedramaticcolumnist.appdistributor.databinding.ProductLayoutBinding
-import com.thedramaticcolumnist.appdistributor.databinding.ProductsFragmentBinding
+import com.thedramaticcolumnist.appdistributor.databinding.ViewCategoryProductsBinding
 import com.thedramaticcolumnist.appdistributor.mViewHolder.ProductsViewHolder
 import com.thedramaticcolumnist.appdistributor.models.ProductModel
 
-class ProductsFragment : Fragment() {
 
-    private lateinit var productsAccountViewModel: ProductsViewModel
-    private var _binding: ProductsFragmentBinding? = null
+class ViewCategoryProducts : Fragment() {
 
+    private var _binding: ViewCategoryProductsBinding? = null
     private val bind get() = _binding!!
 
-    companion object {
-        fun newInstance() = ProductsFragment()
-    }
+    val args: ViewCategoryProductsArgs by navArgs()
+
+    private lateinit var myRef: DatabaseReference
+    lateinit var database: FirebaseDatabase
 
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View? {
-        productsAccountViewModel =
-            ViewModelProvider(this).get(ProductsViewModel::class.java)
-
-        _binding = ProductsFragmentBinding.inflate(inflater, container, false)
-        val root: View = bind.root
-
-        /* val textView: TextView = bind.textView
-         productsAccountViewModel.text.observe(viewLifecycleOwner, Observer {
-             textView.text = it
-         })*/
-        return root
+        _binding = ViewCategoryProductsBinding.inflate(inflater, container, false)
+        return bind.root
     }
-
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         initAllComponents()
+
     }
+
 
     private fun initAllComponents() {
+        database = FirebaseDatabase.getInstance()
+        myRef = database.reference.child("Products")
         bind.recycler.layoutManager = GridLayoutManager(requireContext(), 2)
-    }
 
+
+    }
 
     override fun onDestroyView() {
         super.onDestroyView()
@@ -72,8 +68,7 @@ class ProductsFragment : Fragment() {
     private fun initRecycler() {
         val option: FirebaseRecyclerOptions<ProductModel> =
             FirebaseRecyclerOptions.Builder<ProductModel>()
-                .setQuery(mProducts.orderByChild("seller").equalTo(mID),
-                    ProductModel::class.java)
+                .setQuery(myRef.orderByChild("category").equalTo(args.category), ProductModel::class.java)
                 .build()
         val recyclerAdapter =
             object : FirebaseRecyclerAdapter<ProductModel, ProductsViewHolder>(option) {
@@ -93,11 +88,11 @@ class ProductsFragment : Fragment() {
                     position: Int,
                     model: ProductModel,
                 ) {
-                    bind.progressBar.visibility = View.GONE
                     holder.bind(model)
                     holder.card.setOnClickListener {
-                        //mToast(requireContext(), getRef(position).key.toString())
-                        val action = ProductsFragmentDirections.productsToProductDetail(getRef(position).key.toString())
+
+                        val action =
+                            ViewCategoryProductsDirections.actionViewCategoryProductsToProductDetail(getRef(position).key.toString())
                         view?.findNavController()?.navigate(action)
                     }
 

@@ -16,6 +16,9 @@
         <action
             android:id="@+id/home_to_AddProducts"
             app:destination="@id/nav_add_new_product" />
+        <action
+            android:id="@+id/home_to_viewCategoryProducts"
+            app:destination="@id/viewCategoryProducts" />
     </fragment>
 
     <fragment
@@ -53,7 +56,11 @@
         android:id="@+id/nav_products"
         android:name="com.thedramaticcolumnist.appdistributor.ui.Products.ProductsFragment"
         android:label="@string/menu_products"
-        tools:layout="@layout/products_fragment" />
+        tools:layout="@layout/products_fragment" >
+        <action
+            android:id="@+id/products_to_productDetail"
+            app:destination="@id/productDetail" />
+    </fragment>
     <fragment
         android:id="@+id/vendorAddProducts"
         android:name="com.thedramaticcolumnist.appdistributor.ui.VendorAddPorduct.VendorAddProducts"
@@ -77,6 +84,11 @@
         <action
             android:id="@+id/add_new_product_to_nav_home"
             app:destination="@id/nav_home" />
+        <argument
+            android:name="id"
+            app:argType="string"
+            app:nullable="true"
+            android:defaultValue='""' />
     </fragment>
     <fragment
         android:id="@+id/nav_message"
@@ -93,4 +105,30 @@
         android:name="com.thedramaticcolumnist.appdistributor.ui.Logout.Logout"
         android:label="Logout"
         tools:layout="@layout/logout" />
+    <fragment
+        android:id="@+id/productDetail"
+        android:name="com.thedramaticcolumnist.appdistributor.ui.Products.ViewProducts.ProductDetail"
+        android:label="Details"
+        tools:layout="@layout/product_detail">
+        <argument
+            android:name="id"
+            app:argType="string" />
+        <action
+            android:id="@+id/productDetail_to_nav_add_new_product"
+            app:destination="@id/nav_add_new_product" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/viewCategoryProducts"
+        android:name="com.thedramaticcolumnist.appdistributor.ui.Products.ViewCategoryProducts.ViewCategoryProducts"
+        android:label="Products"
+        tools:layout="@layout/view_category_products" >
+
+        <argument
+            android:name="category"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_viewCategoryProducts_to_productDetail"
+            app:destination="@id/productDetail" />
+    </fragment>
 </navigation>

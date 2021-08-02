@@ -6,9 +6,12 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Toast
+import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.messaging.FirebaseMessaging
 import com.thedramaticcolumnist.appdistributor.R
 import com.thedramaticcolumnist.appdistributor.Utils.mUtils.isValidText
 import com.thedramaticcolumnist.appdistributor.Utils.mUtils.mToast
@@ -21,6 +24,7 @@ class Login : AppCompatActivity(), View.OnClickListener {
     private lateinit var auth: FirebaseAuth
 
     private val TAG: String = "LOGIN"
+    private var token: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,6 +32,7 @@ class Login : AppCompatActivity(), View.OnClickListener {
         setContentView(bind.root)
 
         initAllComponents()
+        getToken()
     }
 
     private fun initAllComponents() {
@@ -35,6 +40,15 @@ class Login : AppCompatActivity(), View.OnClickListener {
         bind.signUp.setOnClickListener(this)
         bind.login.setOnClickListener(this)
         bind.forgetPassword.setOnClickListener(this)
+    }
+    private fun getToken() {
+        FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
+            if (!task.isSuccessful) {
+                Log.w(TAG, "Fetching FCM registration token failed", task.exception)
+                return@OnCompleteListener
+            }
+            token = task.result
+        })
     }
 
     override fun onClick(v: View?) {
@@ -53,12 +67,19 @@ class Login : AppCompatActivity(), View.OnClickListener {
                         bind.password.text.toString().trim())
                         .addOnCompleteListener(this) { task ->
                             if (task.isSuccessful) {
-                                // Sign in success, update UI with the signed-in user's information
-                                Log.d(TAG, "signInWithEmail:success")
-                                bind.progressBar.visibility = View.GONE
-                                intent = Intent(this@Login, HomeScreen::class.java)
-                                startActivity(intent)
-                                finish()
+                                FirebaseDatabase.getInstance().reference.
+                                child(applicationContext.getString(R.string.app_name))
+                                    .child(FirebaseAuth.getInstance().currentUser?.uid.toString())
+                                    .child("token")
+                                    .setValue(token)
+                                    .addOnSuccessListener {
+                                        Log.d(TAG, "signInWithEmail:success")
+                                        bind.progressBar.visibility = View.GONE
+                                        intent = Intent(this@Login, HomeScreen::class.java)
+                                        startActivity(intent)
+                                        finish()
+                                    }
+
                             } else {
                                 bind.progressBar.visibility = View.GONE
                                 // If sign in fails, display a message to the user.

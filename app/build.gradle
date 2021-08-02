@@ -3,6 +3,7 @@ plugins {
     id 'kotlin-android'
     id 'com.google.gms.google-services'
     id 'com.google.firebase.crashlytics'
+    id 'androidx.navigation.safeargs.kotlin'
 }
 
 android {
@@ -68,5 +69,19 @@ dependencies {
     //Cooroutines
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.1'
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.1'
+
+
+    // dependency sor slider view
+    implementation "com.github.smarteist:autoimageslider:1.3.9"
+
+    //Firebase Ui
+    implementation 'com.firebaseui:firebase-ui-database:7.1.1'
+
+    //MultiDex
+    implementation 'com.android.support:multidex:1.0.3'
+
+
+    //Gson
+    implementation 'com.google.code.gson:gson:2.8.6'
 
 }

@@ -5,18 +5,16 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.webkit.WebSettings
-import android.webkit.WebView
-import android.webkit.WebViewClient
 import android.widget.ImageView
-import android.widget.TextView
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
@@ -36,6 +34,8 @@ class AddNewProduct : Fragment(), View.OnClickListener {
     private var _binding: AddNewProductBinding? = null
 
 
+    val args: AddNewProductArgs by navArgs()
+
     private val bind get() = _binding!!
     val TAG = "ADD PRODUCTS"
     val arrayList = ArrayList<String>()
@@ -45,8 +45,6 @@ class AddNewProduct : Fragment(), View.OnClickListener {
         fun newInstance() = AddNewProduct()
     }
 
-    private lateinit var viewModel: AddNewProductViewModel
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
@@ -55,20 +53,21 @@ class AddNewProduct : Fragment(), View.OnClickListener {
             ViewModelProvider(this).get(AddNewProductViewModel::class.java)
 
         _binding = AddNewProductBinding.inflate(inflater, container, false)
-        val root: View = bind.root
-
-        val textView: TextView = bind.textView
-        addNewProductViewModel.text.observe(viewLifecycleOwner, Observer {
-            textView.text = it
-        })
-        return root
+        return bind.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initAllComponent()
-        //loadUrl("https://thedramaticcolumnist.com/store-manager/products-manage/")
+        if (args.id != null) {
+            mToast(requireContext(), args.id.toString())
+            //get And fetch all details of products
+        }
+
+
     }
+
+
 
     private fun initAllComponent() {
         bind.imageOne.setOnClickListener(this)
@@ -81,35 +80,6 @@ class AddNewProduct : Fragment(), View.OnClickListener {
         bind.imageEight.setOnClickListener(this)
         bind.submit.setOnClickListener(this)
 
-    }
-
-    fun loadUrl(url: String) {
-        val settings: WebSettings = bind.webView.getSettings()
-        settings.domStorageEnabled = true
-
-        bind.webView.requestFocus();
-        bind.webView.settings.lightTouchEnabled = true;
-        bind.webView.settings.javaScriptEnabled = true;
-        bind.webView.settings.setGeolocationEnabled(true);
-        bind.webView.isSoundEffectsEnabled = true;
-        bind.webView.settings.setAppCacheEnabled(true);
-        bind.webView.loadUrl(url);
-        bind.webView.webViewClient = object : WebViewClient() {
-            override fun shouldOverrideUrlLoading(view: WebView, url: String): Boolean {
-                view.loadUrl(url)
-                bind.progressBar.visibility = View.VISIBLE
-                return true
-            }
-
-            override fun onPageFinished(view: WebView?, url: String?) {
-                super.onPageFinished(view, url)
-            }
-
-            override fun onPageCommitVisible(view: WebView?, url: String?) {
-                super.onPageCommitVisible(view, url)
-                bind.progressBar.visibility = View.GONE
-            }
-        }
     }
 
 
@@ -150,45 +120,46 @@ class AddNewProduct : Fragment(), View.OnClickListener {
                         bind.shortDescription)
                     &&
                     isValidText(bind.LongDescription.text.toString().trim(), bind.LongDescription)
+                    && isValidText(bind.mrp.text.toString().trim(), bind.mrp)
                     && isValidText(bind.price.text.toString().trim(), bind.price)
                     && isValidText(bind.quantity.text.toString().trim(), bind.quantity
                     )
                 ) {
                     if (!bind.category.selectedItem.equals("Category")) {
-                        if (!bind.subCategory.selectedItem.equals("Sub-Category")) {
-                            if (!arrayList[0].isNullOrBlank()) {
-                                val timestamp =
-                                    SimpleDateFormat("yyyyMMddHHmmssmsms").format(Date()) + Random().nextInt(
-                                        1000000)
+                        if (!arrayList.isNullOrEmpty()) {
+                            val timestamp =
+                                SimpleDateFormat("yyyyMMddHHmmssmsms").format(Date()) + Random().nextInt(
+                                    1000000)
 
-                                hashMap["product_name"] = bind.productName.text.toString().trim()
-                                hashMap["seller"] =
-                                    FirebaseAuth.getInstance().currentUser?.uid.toString()
-                                hashMap["short_description"] =
-                                    bind.shortDescription.text.toString().trim()
-                                hashMap["long_description"] =
-                                    bind.LongDescription.text.toString().trim()
-                                hashMap["price"] = bind.price.text.toString().trim()
-                                hashMap["category"] = bind.category.selectedItem.toString()
-                                hashMap["subCategory"] = bind.category.selectedItem.toString()
-                                hashMap["image"] = arrayList.toString()
-                                hashMap["image_one"] = arrayList[0]
-                                hashMap["quantity"] = bind.quantity.text.toString().trim()
+                            hashMap["product_name"] = bind.productName.text.toString().trim()
+                            hashMap["seller"] =
+                                FirebaseAuth.getInstance().currentUser?.uid.toString()
+                            hashMap["short_description"] =
+                                bind.shortDescription.text.toString().trim()
+                            hashMap["long_description"] =
+                                bind.LongDescription.text.toString().trim()
+                            hashMap["price"] = bind.price.text.toString().trim()
+                            hashMap["category"] = bind.category.selectedItem.toString()
+                            hashMap["subCategory"] = bind.category.selectedItem.toString()
+                            hashMap["image"] = arrayList.toString()
+                            hashMap["image_one"] = arrayList[0]
+                            hashMap["quantity"] = bind.quantity.text.toString().trim()
+                            hashMap["mrp"] = bind.mrp.text.toString().trim()
 
-                                FirebaseDatabase.getInstance().reference.child("Products")
-                                    .child(timestamp)
-                                    .setValue(hashMap)
-                                    .addOnSuccessListener {
-                                        mToast(requireContext(), "Added")
-                                        parentFragmentManager.popBackStack()
-                                    }
+                            FirebaseDatabase.getInstance().reference.child("Products")
+                                .child(timestamp)
+                                .setValue(hashMap)
+                                .addOnSuccessListener {
+                                    mToast(requireContext(), "Added")
+                                    parentFragmentManager.popBackStack()
+                                }.addOnFailureListener {
+                                    mToast(requireContext(), it.message.toString())
+                                }
 
-                            } else {
-                                mToast(requireContext(), "Please upload a image")
-                            }
                         } else {
-                            mToast(requireContext(), "Please select a sub category")
+                            mToast(requireContext(), "Please upload a image")
                         }
+
                     } else {
                         mToast(requireContext(), "Please select a category")
                     }

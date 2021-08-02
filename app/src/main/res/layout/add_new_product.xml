@@ -5,21 +5,6 @@
     android:layout_height="match_parent"
     tools:context=".ui.AddNewProduct.AddNewProduct">
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Hello"
-        android:visibility="gone" />
-
-    <WebView
-        android:id="@+id/webView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:visibility="gone">
-
-    </WebView>
-
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -142,7 +127,8 @@
                 android:layout_marginLeft="15dp"
                 android:layout_marginTop="15dp"
                 android:layout_marginRight="15dp"
-                android:entries="@array/sub_categories" />
+                android:entries="@array/sub_categories"
+                android:visibility="gone" />
 
 
             <com.google.android.material.textfield.TextInputLayout
@@ -186,12 +172,29 @@
                 android:layout_marginRight="15dp">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/mrp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="MRP"
+                    android:inputType="number" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginRight="15dp">
+
+                <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/price"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Price"
+                    android:hint="Selling price"
                     android:inputType="number" />
             </com.google.android.material.textfield.TextInputLayout>
+
 
             <com.google.android.material.textfield.TextInputLayout
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"

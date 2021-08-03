@@ -1,4 +1,4 @@
-package com.thedramaticcolumnist.appdistributor.ui.Payments
+package com.thedramaticcolumnist.appdistributor.ui.Profile
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

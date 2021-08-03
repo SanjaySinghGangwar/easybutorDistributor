@@ -34,7 +34,7 @@ class OrderFragment : Fragment() {
         val root: View = bind.root
 
         val textView: TextView = bind.textView
-        orderViewModel.text.observe(viewLifecycleOwner, Observer {
+        orderViewModel.text.observe(viewLifecycleOwner, {
             textView.text = it
         })
         return root
@@ -42,41 +42,13 @@ class OrderFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initAllComponent()
-        loadUrl("https://thedramaticcolumnist.com/store-manager/orderslist/")
+
     }
 
     private fun initAllComponent() {
 
     }
 
-    fun loadUrl(url: String) {
-        val settings: WebSettings = bind.webView.getSettings()
-        settings.domStorageEnabled = true
-
-        bind.webView.requestFocus();
-        bind.webView.settings.lightTouchEnabled = true;
-        bind.webView.settings.javaScriptEnabled = true;
-        bind.webView.settings.setGeolocationEnabled(true);
-        bind.webView.isSoundEffectsEnabled = true;
-        bind.webView.settings.setAppCacheEnabled(true);
-        bind.webView.loadUrl(url);
-        bind.webView.webViewClient = object : WebViewClient() {
-            override fun shouldOverrideUrlLoading(view: WebView, url: String): Boolean {
-                view.loadUrl(url)
-                bind.progressBar.visibility = View.VISIBLE
-                return true
-            }
-
-            override fun onPageFinished(view: WebView?, url: String?) {
-                super.onPageFinished(view, url)
-            }
-
-            override fun onPageCommitVisible(view: WebView?, url: String?) {
-                super.onPageCommitVisible(view, url)
-                bind.progressBar.visibility = View.GONE
-            }
-        }
-    }
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null

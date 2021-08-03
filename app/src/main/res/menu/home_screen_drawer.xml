@@ -28,6 +28,7 @@
             android:visible="false" />
         <item
             android:id="@+id/nav_message"
+            android:visible="false"
             android:icon="@drawable/ic_baseline_message_24"
             android:title="@string/menu_messages" />
         <item
@@ -41,15 +42,16 @@
             android:title="@string/menu_products" />
         <item
             android:id="@+id/nav_registration"
-            android:icon="@drawable/ic_account"
+            android:icon="@drawable/ic_order"
             android:title="@string/menu_distributor"
             android:visible="false" />
         <item
-            android:id="@+id/nav_payment"
-            android:icon="@android:drawable/stat_sys_upload_done"
+            android:id="@+id/nav_profile"
+            android:icon="@drawable/ic_account"
             android:title="@string/menu_payment" />
         <item
             android:id="@+id/nav_setting"
+            android:visible="false"
             android:icon="@drawable/ic_settings"
             android:title="@string/menu_setting" />
         <item
@@ -63,10 +65,5 @@
             android:icon="@drawable/ic_customer_service"
             android:title="@string/menu_customer_service"
             android:visible="false" />
-        <item
-            android:id="@+id/nav_logout"
-            android:visible="false"
-            android:icon="@drawable/ic_logout"
-            android:title="@string/logout" />
     </group>
 </menu>

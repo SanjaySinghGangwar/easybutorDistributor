@@ -55,31 +55,18 @@ class HomeScreen : AppCompatActivity(), View.OnClickListener {
             R.id.nav_category,
             R.id.nav_products,
             R.id.nav_registration,
-            R.id.nav_payment,
+            R.id.nav_profile,
             R.id.nav_setting,
             R.id.nav_account,
-            R.id.nav_customer_service,
-            R.id.nav_logout), drawerLayout)
+            R.id.nav_customer_service
+        ), drawerLayout)
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
 
         setUpProfileData()
     }
 
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        menuInflater.inflate(R.menu.home_screen, menu)
-        return true
-    }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            R.id.action_logout -> {
-                navController.navigateUp()
-                navController.navigate(R.id.home_to_logout)
-            }
-        }
-        return super.onOptionsItemSelected(item)
-    }
 
     override fun onSupportNavigateUp(): Boolean {
         val navController = findNavController(R.id.nav_host_fragment_content_home_screen)

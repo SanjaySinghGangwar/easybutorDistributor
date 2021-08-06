@@ -176,7 +176,7 @@ class AddNewProduct : Fragment(), View.OnClickListener {
                     if (!bind.category.selectedItem.equals("Category")) {
                         if (!arrayList.isNullOrEmpty()) {
 
-                            var timestamp = if (args.id != null) {
+                            var timestamp = if (args.id != null&& args.id.toString().isNotEmpty()) {
                                 args.id.toString()
                             } else {
                                 SimpleDateFormat("yyyyMMddHHmmssmsms").format(Date()) + Random().nextInt(

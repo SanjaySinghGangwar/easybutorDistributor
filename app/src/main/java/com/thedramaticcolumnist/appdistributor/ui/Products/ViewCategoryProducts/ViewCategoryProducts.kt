@@ -1,10 +1,11 @@
 package com.thedramaticcolumnist.appdistributor.ui.Products.ViewCategoryProducts
 
+import android.R
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.GridLayoutManager
@@ -12,8 +13,6 @@ import com.firebase.ui.database.FirebaseRecyclerAdapter
 import com.firebase.ui.database.FirebaseRecyclerOptions
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
-import com.thedramaticcolumnist.appdistributor.R
-import com.thedramaticcolumnist.appdistributor.Utils.mUtils.mToast
 import com.thedramaticcolumnist.appdistributor.databinding.ProductLayoutBinding
 import com.thedramaticcolumnist.appdistributor.databinding.ViewCategoryProductsBinding
 import com.thedramaticcolumnist.appdistributor.mViewHolder.ProductsViewHolder
@@ -42,7 +41,17 @@ class ViewCategoryProducts : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initAllComponents()
+        setUpToolbar()
+    }
 
+    private fun setUpToolbar() {
+
+
+       /* mToolbar = rootView.findViewById(R.id.toolbar_home) as Toolbar
+        if (mToolbar != null) {
+            setSupportActionBar(mToolbar)
+        }
+        mToolbar.setTitle(null)*/
     }
 
 
@@ -68,7 +77,8 @@ class ViewCategoryProducts : Fragment() {
     private fun initRecycler() {
         val option: FirebaseRecyclerOptions<ProductModel> =
             FirebaseRecyclerOptions.Builder<ProductModel>()
-                .setQuery(myRef.orderByChild("category").equalTo(args.category), ProductModel::class.java)
+                .setQuery(myRef.orderByChild("category").equalTo(args.category),
+                    ProductModel::class.java)
                 .build()
         val recyclerAdapter =
             object : FirebaseRecyclerAdapter<ProductModel, ProductsViewHolder>(option) {
@@ -92,7 +102,8 @@ class ViewCategoryProducts : Fragment() {
                     holder.card.setOnClickListener {
 
                         val action =
-                            ViewCategoryProductsDirections.actionViewCategoryProductsToProductDetail(getRef(position).key.toString())
+                            ViewCategoryProductsDirections.actionViewCategoryProductsToProductDetail(
+                                getRef(position).key.toString())
                         view?.findNavController()?.navigate(action)
                     }
 

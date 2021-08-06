@@ -12,17 +12,21 @@ import androidx.navigation.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.database.*
+import com.smarteist.autoimageslider.SliderView
 import com.thedramaticcolumnist.appdistributor.DataBase.mDatabase.mID
 import com.thedramaticcolumnist.appdistributor.Utils.mUtils.mToast
 import com.thedramaticcolumnist.appdistributor.databinding.ProductDetailBinding
+import com.thedramaticcolumnist.appdistributor.mAdapter.SliderAdapter
 import com.thedramaticcolumnist.appdistributor.mAdapter.productImagesAdapter
+import com.thedramaticcolumnist.appdistributor.models.SliderData
 import java.util.*
 import kotlin.collections.ArrayList
+import kotlin.math.roundToInt
 
 
 class ProductDetail : Fragment(), View.OnClickListener {
 
-    private lateinit var splitString: List<String>
+    private lateinit var splitString: ArrayList<String>
     var images: String = ""
     val args: ProductDetailArgs by navArgs()
 
@@ -70,7 +74,21 @@ class ProductDetail : Fragment(), View.OnClickListener {
 
     }
 
+    private fun setUpSlider() {
+        val sliderDataArrayList: ArrayList<SliderData> = ArrayList()
+        val sliderView: SliderView = bind.slider
+        for(i in splitString.indices){
+            sliderDataArrayList.add(SliderData(splitString[i]))
+        }
 
+        val adapter = SliderAdapter(requireContext(), sliderDataArrayList)
+
+        sliderView.autoCycleDirection = SliderView.LAYOUT_DIRECTION_LTR
+        sliderView.setSliderAdapter(adapter)
+        sliderView.scrollTimeInSec = 3
+        sliderView.isAutoCycle = true
+        sliderView.startAutoCycle()
+    }
     private fun fetchProductDetail() {
         myRef.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
@@ -80,14 +98,8 @@ class ProductDetail : Fragment(), View.OnClickListener {
                 if (dataSnapshot.hasChild("image")) {
                     images = dataSnapshot.child("image").value.toString()
                     stringToArray(images.substring(1, images.length - 1));
+                    setUpSlider()
 
-
-                    bind.recycler.layoutManager = LinearLayoutManager(requireContext(),
-                        LinearLayoutManager.HORIZONTAL,
-                        false)
-                    productAdapter = productImagesAdapter(requireContext(), splitString)
-                    bind.recycler.adapter = productAdapter
-                    productAdapter!!.notifyDataSetChanged()
 
                 }
 
@@ -96,7 +108,7 @@ class ProductDetail : Fragment(), View.OnClickListener {
                         dataSnapshot.child("long_description").value.toString()
                 }
                 if (dataSnapshot.hasChild("price")) {
-                    bind.price.text = "₹ " + dataSnapshot.child("price").value.toString()
+                    bind.price.text = "Selling ₹ " + dataSnapshot.child("price").value.toString()
                 }
                 if (dataSnapshot.hasChild("product_name")) {
                     bind.name.text = dataSnapshot.child("product_name").value.toString()
@@ -118,6 +130,18 @@ class ProductDetail : Fragment(), View.OnClickListener {
                     quantity =
                         dataSnapshot.child("quantity").value.toString()
                 }
+
+                if (dataSnapshot.hasChild("mrp")) {
+                    bind.mrp.text =
+                        "MPR ₹ " + dataSnapshot.child("mrp").value.toString()
+                }
+
+                if (dataSnapshot.hasChild("mrp") && dataSnapshot.hasChild("price")) {
+                    val price = dataSnapshot.child("price").value.toString()
+                    val mrp = dataSnapshot.child("mrp").value.toString()
+                    bind.discount.text =
+                        100.minus((price.toFloat() / mrp.toFloat()) * 100).roundToInt().toString()+" %"
+                }
             }
 
             override fun onCancelled(error: DatabaseError) {
@@ -130,7 +154,7 @@ class ProductDetail : Fragment(), View.OnClickListener {
     }
 
     private fun stringToArray(images: String) {
-        splitString = images.split(",")
+        splitString = images.split(",") as ArrayList<String>
     }
 
     override fun onClick(v: View?) {

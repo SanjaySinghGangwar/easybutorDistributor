@@ -9,40 +9,49 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.navArgs
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.engine.DiskCacheStrategy
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import com.google.firebase.messaging.FirebaseMessaging
 import com.google.firebase.storage.FirebaseStorage
 import com.thedramaticcolumnist.appdistributor.DataBase.mDatabase.mProducts
 import com.thedramaticcolumnist.appdistributor.R
 import com.thedramaticcolumnist.appdistributor.Utils.PermissionUtil
+import com.thedramaticcolumnist.appdistributor.Utils.mUtils.getTimerStamp
+import com.thedramaticcolumnist.appdistributor.Utils.mUtils.hideLoader
 import com.thedramaticcolumnist.appdistributor.Utils.mUtils.isValidText
+import com.thedramaticcolumnist.appdistributor.Utils.mUtils.mLog
 import com.thedramaticcolumnist.appdistributor.Utils.mUtils.mToast
+import com.thedramaticcolumnist.appdistributor.Utils.mUtils.showLoader
 import com.thedramaticcolumnist.appdistributor.databinding.AddNewProductBinding
+import com.thedramaticcolumnist.appdistributor.mAdapter.AddNewProductImageAdapter
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.collections.ArrayList
 
 
-class AddNewProduct : Fragment(), View.OnClickListener {
+class AddNewProduct : Fragment(), View.OnClickListener, AddNewProductImageAdapter.ItemListen {
 
     private lateinit var addNewProductViewModel: AddNewProductViewModel
     private var _binding: AddNewProductBinding? = null
-
-
+    var questionTwoAdapter: AddNewProductImageAdapter? = null
+    var images: String = ""
+    private var splitString: ArrayList<String> = ArrayList()
     val args: AddNewProductArgs by navArgs()
+
+    private lateinit var timestamp: String
 
     private val bind get() = _binding!!
     val TAG = "ADD PRODUCTS"
-    val arrayList = ArrayList<String>()
     var hashMap: HashMap<String, String> = HashMap<String, String>()
+    private var token: String? = null
 
     companion object {
         fun newInstance() = AddNewProduct()
@@ -51,7 +60,7 @@ class AddNewProduct : Fragment(), View.OnClickListener {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
-    ): View? {
+    ): View {
         addNewProductViewModel =
             ViewModelProvider(this).get(AddNewProductViewModel::class.java)
 
@@ -62,12 +71,16 @@ class AddNewProduct : Fragment(), View.OnClickListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initAllComponent()
-        if (args.id != null) {
+        getToken()
+        setUpRecycler()
 
+        timestamp = if (args.id.toString().length > 2) {
             fetchProductDetail()
+            args.id.toString()
+        } else {
+            getTimerStamp()
         }
-
-
+        questionTwoAdapter!!.setItems(splitString)
     }
 
     private fun fetchProductDetail() {
@@ -75,11 +88,12 @@ class AddNewProduct : Fragment(), View.OnClickListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 if (dataSnapshot.hasChild("category")) {
                     val mArray = resources.getStringArray(R.array.categories)
-                    bind.category.setSelection(listOf(mArray)
-                        .indexOf(dataSnapshot.child("category").value))
+                    bind.category.setSelection(mArray.indexOf(dataSnapshot.child("category").value))
                 }
                 if (dataSnapshot.hasChild("image")) {
-
+                    images = dataSnapshot.child("image").value.toString()
+                    stringToArray(images.substring(1, images.length - 1));
+                    questionTwoAdapter!!.setItems(splitString)
                 }
 
                 if (dataSnapshot.hasChild("long_description")) {
@@ -117,17 +131,17 @@ class AddNewProduct : Fragment(), View.OnClickListener {
         })
     }
 
-    private fun initAllComponent() {
-        bind.imageOne.setOnClickListener(this)
-        bind.imageTwo.setOnClickListener(this)
-        bind.imageThree.setOnClickListener(this)
-        bind.imageFour.setOnClickListener(this)
-        bind.imageFive.setOnClickListener(this)
-        bind.imageSix.setOnClickListener(this)
-        bind.imageSeven.setOnClickListener(this)
-        bind.imageEight.setOnClickListener(this)
-        bind.submit.setOnClickListener(this)
+    private fun setUpRecycler() {
+        questionTwoAdapter = AddNewProductImageAdapter(requireContext(), this)
+        bind.recycler.layoutManager = LinearLayoutManager(requireContext(),
+            LinearLayoutManager.HORIZONTAL,
+            true)
+        bind.recycler.adapter = questionTwoAdapter
+    }
 
+    private fun initAllComponent() {
+        bind.submit.setOnClickListener(this)
+        bind.addImages.setOnClickListener(this)
     }
 
 
@@ -138,29 +152,9 @@ class AddNewProduct : Fragment(), View.OnClickListener {
 
     override fun onClick(v: View?) {
         when (v?.id) {
-            R.id.imageOne -> {
+            R.id.addImages -> {
+                showLoader(bind.progressBar)
                 openGallery(1)
-            }
-            R.id.imageTwo -> {
-                openGallery(2)
-            }
-            R.id.imageThree -> {
-                openGallery(3)
-            }
-            R.id.imageFour -> {
-                openGallery(4)
-            }
-            R.id.imageFive -> {
-                openGallery(5)
-            }
-            R.id.imageSix -> {
-                openGallery(6)
-            }
-            R.id.imageSeven -> {
-                openGallery(7)
-            }
-            R.id.imageEight -> {
-                openGallery(8)
             }
             R.id.submit -> {
                 if (isValidText(bind.productName.text.toString().trim(), bind.productName)
@@ -174,16 +168,7 @@ class AddNewProduct : Fragment(), View.OnClickListener {
                     )
                 ) {
                     if (!bind.category.selectedItem.equals("Category")) {
-                        if (!arrayList.isNullOrEmpty()) {
-
-                            var timestamp = if (args.id != null&& args.id.toString().isNotEmpty()) {
-                                args.id.toString()
-                            } else {
-                                SimpleDateFormat("yyyyMMddHHmmssmsms").format(Date()) + Random().nextInt(
-                                    1000000)
-                            }
-
-
+                        if (splitString.size > 1) {
                             hashMap["product_name"] = bind.productName.text.toString().trim()
                             hashMap["seller"] =
                                 FirebaseAuth.getInstance().currentUser?.uid.toString()
@@ -193,18 +178,17 @@ class AddNewProduct : Fragment(), View.OnClickListener {
                                 bind.LongDescription.text.toString().trim()
                             hashMap["price"] = bind.price.text.toString().trim()
                             hashMap["category"] = bind.category.selectedItem.toString()
-                            hashMap["subCategory"] = bind.category.selectedItem.toString()
-                            hashMap["image"] = arrayList.toString()
-                            hashMap["image_one"] = arrayList[0]
+                            hashMap["image"] = splitString.toString()
+                            hashMap["image_one"] = splitString!![0]
                             hashMap["quantity"] = bind.quantity.text.toString().trim()
                             hashMap["mrp"] = bind.mrp.text.toString().trim()
+                            hashMap["sellerToken"] = token.toString()
 
                             FirebaseDatabase.getInstance().reference.child("Products")
                                 .child(timestamp)
                                 .setValue(hashMap)
                                 .addOnSuccessListener {
-
-                                    var toast = if (args.id != null) {
+                                    val toast = if (args.id.toString().length > 2) {
                                         "Updated"
                                     } else {
                                         "Added"
@@ -216,14 +200,12 @@ class AddNewProduct : Fragment(), View.OnClickListener {
                                 }
 
                         } else {
-                            mToast(requireContext(), "Please upload a image")
+                            mToast(requireContext(), "Please upload at least two image")
                         }
-
                     } else {
                         mToast(requireContext(), "Please select a category")
                     }
                 }
-                Log.i(TAG, "onClick: " + arrayList + " :: " + arrayList.size)
             }
         }
     }
@@ -247,56 +229,16 @@ class AddNewProduct : Fragment(), View.OnClickListener {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == Activity.RESULT_OK) {
-            when (requestCode) {
-                1 -> {
-                    setImage(data!!.data, bind.imageOne)
-                    saveProductImage(data.data)
-                }
-                2 -> {
-                    setImage(data!!.data, bind.imageTwo)
-                    saveProductImage(data.data)
-                }
-                3 -> {
-                    setImage(data!!.data, bind.imageThree)
-                    saveProductImage(data.data)
-                }
-                4 -> {
-                    setImage(data!!.data, bind.imageFour)
-                    saveProductImage(data.data)
-                }
-                5 -> {
-                    setImage(data!!.data, bind.imageFive)
-                    saveProductImage(data.data)
-                }
-                6 -> {
-                    setImage(data!!.data, bind.imageSix)
-                    saveProductImage(data.data)
-                }
-                7 -> {
-                    setImage(data!!.data, bind.imageSeven)
-                    saveProductImage(data.data)
-                }
-                8 -> {
-                    setImage(data!!.data, bind.imageEight)
-                    saveProductImage(data.data)
-                }
+            if (requestCode == 1) {
+                saveProductImage(data!!.data)
             }
+        } else {
+            hideLoader(bind.progressBar)
         }
     }
 
-    private fun setImage(image: Uri?, imageView: ImageView) {
-        Glide
-            .with(requireContext())
-            .load(image)
-            .diskCacheStrategy(DiskCacheStrategy.ALL)
-            .centerCrop()
-            .placeholder(R.drawable.ic_default_product)
-            .into(imageView);
-    }
-
     fun saveProductImage(image: Uri?) {
-        val TAG = "FIREBASE STORAGE"
-        var url = ""
+
         val random = Random()
         val timestamp =
             SimpleDateFormat("yyyyMMddHHmmssmsms").format(Date()) + random.nextInt(1000000)
@@ -306,13 +248,43 @@ class AddNewProduct : Fragment(), View.OnClickListener {
         productStorageRef.putFile(image!!).addOnCompleteListener { uploadTask ->
             if (uploadTask.isSuccessful) {
                 productStorageRef.downloadUrl.addOnSuccessListener {
-                    arrayList.add(it.toString())
+                    splitString.add(it.toString())
+                    questionTwoAdapter!!.setItems(splitString)
+
                 }
             } else {
-                Log.i(TAG, "saveImage: ERROR" + uploadTask.exception?.message)
+                mLog(uploadTask.exception?.message.toString())
             }
+            hideLoader(bind.progressBar)
         }
 
     }
+
+    private fun getToken() {
+        FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
+            if (!task.isSuccessful) {
+                Log.w(TAG, "Fetching FCM registration token failed", task.exception)
+                return@OnCompleteListener
+            }
+            token = task.result
+        })
+    }
+
+    private fun stringToArray(images: String) {
+        splitString = images.split(",") as ArrayList<String>
+    }
+
+    override fun delete(index: Int) {
+        if (splitString.size > 0) {
+            mLog("BEFORE :: $splitString")
+            splitString.removeAt(index)
+            questionTwoAdapter!!.setItems(splitString)
+            mLog("AFTER :: $splitString")
+        } else {
+            mToast(requireContext(), "Minimum one image is mandatory")
+        }
+
+    }
+
 
 }

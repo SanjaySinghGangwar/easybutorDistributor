@@ -9,35 +9,35 @@
         android:id="@+id/nav_home"
         android:name="com.thedramaticcolumnist.appdistributor.ui.home.HomeFragment"
         android:label="@string/app_name"
-        tools:layout="@layout/fragment_home" >
+        tools:layout="@layout/fragment_home">
         <action
-            app:enterAnim="@anim/nav_default_enter_anim"
-            app:exitAnim="@anim/nav_default_exit_anim"
-            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
-            app:popExitAnim="@anim/nav_default_pop_exit_anim"
             android:id="@+id/home_to_AddProducts"
-            app:destination="@id/nav_add_new_product" />
-        <action
+            app:destination="@id/nav_add_new_product"
             app:enterAnim="@anim/nav_default_enter_anim"
             app:exitAnim="@anim/nav_default_exit_anim"
             app:popEnterAnim="@anim/nav_default_pop_enter_anim"
-            app:popExitAnim="@anim/nav_default_pop_exit_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+        <action
             android:id="@+id/home_to_viewCategoryProducts"
-            app:destination="@id/viewCategoryProducts" />
+            app:destination="@id/viewCategoryProducts"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
     </fragment>
 
     <fragment
         android:id="@+id/nav_order"
         android:name="com.thedramaticcolumnist.appdistributor.ui.Order.OrderFragment"
         android:label="@string/menu_gallery"
-        tools:layout="@layout/order_fragment" >
+        tools:layout="@layout/order_fragment">
         <action
+            android:id="@+id/order_to_orderDetail"
+            app:destination="@id/orderDetail"
             app:enterAnim="@anim/nav_default_enter_anim"
             app:exitAnim="@anim/nav_default_exit_anim"
             app:popEnterAnim="@anim/nav_default_pop_enter_anim"
-            app:popExitAnim="@anim/nav_default_pop_exit_anim"
-            android:id="@+id/order_to_orderDetail"
-            app:destination="@id/orderDetail" />
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
     </fragment>
 
     <fragment
@@ -69,14 +69,14 @@
         android:id="@+id/nav_products"
         android:name="com.thedramaticcolumnist.appdistributor.ui.Products.ProductsFragment"
         android:label="@string/menu_products"
-        tools:layout="@layout/products_fragment" >
+        tools:layout="@layout/products_fragment">
         <action
+            android:id="@+id/products_to_productDetail"
+            app:destination="@id/productDetail"
             app:enterAnim="@anim/nav_default_enter_anim"
             app:exitAnim="@anim/nav_default_exit_anim"
             app:popEnterAnim="@anim/nav_default_pop_enter_anim"
-            app:popExitAnim="@anim/nav_default_pop_exit_anim"
-            android:id="@+id/products_to_productDetail"
-            app:destination="@id/productDetail" />
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
     </fragment>
     <fragment
         android:id="@+id/vendorAddProducts"
@@ -92,14 +92,14 @@
         android:id="@+id/nav_profile"
         android:name="com.thedramaticcolumnist.appdistributor.ui.Profile.MyProfile"
         android:label="My Account"
-        tools:layout="@layout/payments" >
+        tools:layout="@layout/payments">
         <action
+            android:id="@+id/profile_to_products"
+            app:destination="@id/nav_products"
             app:enterAnim="@anim/nav_default_enter_anim"
             app:exitAnim="@anim/nav_default_exit_anim"
             app:popEnterAnim="@anim/nav_default_pop_enter_anim"
-            app:popExitAnim="@anim/nav_default_pop_exit_anim"
-            android:id="@+id/profile_to_products"
-            app:destination="@id/nav_products" />
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
         <action
 
             android:id="@+id/profile_to_order"
@@ -112,20 +112,20 @@
     <fragment
         android:id="@+id/nav_add_new_product"
         android:name="com.thedramaticcolumnist.appdistributor.ui.AddNewProduct.AddNewProduct"
-        android:label="Add new product"
-        tools:layout="@layout/add_new_product" >
+        android:label="Product detail"
+        tools:layout="@layout/add_new_product">
         <action
+            android:id="@+id/add_new_product_to_nav_home"
+            app:destination="@id/nav_home"
             app:enterAnim="@anim/nav_default_enter_anim"
             app:exitAnim="@anim/nav_default_exit_anim"
             app:popEnterAnim="@anim/nav_default_pop_enter_anim"
-            app:popExitAnim="@anim/nav_default_pop_exit_anim"
-            android:id="@+id/add_new_product_to_nav_home"
-            app:destination="@id/nav_home" />
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
         <argument
             android:name="id"
+            android:defaultValue='""'
             app:argType="string"
-            app:nullable="true"
-            android:defaultValue='""' />
+            app:nullable="true" />
     </fragment>
     <fragment
         android:id="@+id/nav_message"
@@ -147,36 +147,36 @@
             android:name="id"
             app:argType="string" />
         <action
+            android:id="@+id/productDetail_to_nav_add_new_product"
+            app:destination="@id/nav_add_new_product"
             app:enterAnim="@anim/nav_default_enter_anim"
             app:exitAnim="@anim/nav_default_exit_anim"
             app:popEnterAnim="@anim/nav_default_pop_enter_anim"
-            app:popExitAnim="@anim/nav_default_pop_exit_anim"
-            android:id="@+id/productDetail_to_nav_add_new_product"
-            app:destination="@id/nav_add_new_product" />
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
     </fragment>
 
     <fragment
         android:id="@+id/viewCategoryProducts"
         android:name="com.thedramaticcolumnist.appdistributor.ui.Products.ViewCategoryProducts.ViewCategoryProducts"
         android:label="Products"
-        tools:layout="@layout/view_category_products" >
+        tools:layout="@layout/view_category_products">
 
         <argument
             android:name="category"
             app:argType="string" />
         <action
+            android:id="@+id/action_viewCategoryProducts_to_productDetail"
+            app:destination="@id/productDetail"
             app:enterAnim="@anim/nav_default_enter_anim"
             app:exitAnim="@anim/nav_default_exit_anim"
             app:popEnterAnim="@anim/nav_default_pop_enter_anim"
-            app:popExitAnim="@anim/nav_default_pop_exit_anim"
-            android:id="@+id/action_viewCategoryProducts_to_productDetail"
-            app:destination="@id/productDetail" />
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
     </fragment>
     <fragment
         android:id="@+id/orderDetail"
         android:name="com.thedramaticcolumnist.appdistributor.ui.OrderDetail.OrderDetail"
         android:label="order_detail"
-        tools:layout="@layout/order_detail" >
+        tools:layout="@layout/order_detail">
         <argument
             android:name="id"
             app:argType="string" />

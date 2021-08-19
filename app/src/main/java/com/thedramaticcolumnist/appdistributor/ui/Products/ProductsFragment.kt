@@ -96,7 +96,6 @@ class ProductsFragment : Fragment() {
                     bind.progressBar.visibility = View.GONE
                     holder.bind(model)
                     holder.card.setOnClickListener {
-                        //mToast(requireContext(), getRef(position).key.toString())
                         val action = ProductsFragmentDirections.productsToProductDetail(getRef(position).key.toString())
                         view?.findNavController()?.navigate(action)
                     }

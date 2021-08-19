@@ -17,6 +17,7 @@ import com.thedramaticcolumnist.appdistributor.DataBase.mDatabase.mID
 import com.thedramaticcolumnist.appdistributor.Utils.mUtils.mToast
 import com.thedramaticcolumnist.appdistributor.databinding.ProductDetailBinding
 import com.thedramaticcolumnist.appdistributor.mAdapter.SliderAdapter
+import com.thedramaticcolumnist.appdistributor.mAdapter.SliderAdapterHome
 import com.thedramaticcolumnist.appdistributor.mAdapter.productImagesAdapter
 import com.thedramaticcolumnist.appdistributor.models.SliderData
 import java.util.*
@@ -55,7 +56,6 @@ class ProductDetail : Fragment(), View.OnClickListener {
         super.onViewCreated(view, savedInstanceState)
         initAllComponent()
         fetchProductDetail()
-
     }
 
     private fun initAllComponent() {
@@ -81,7 +81,7 @@ class ProductDetail : Fragment(), View.OnClickListener {
             sliderDataArrayList.add(SliderData(splitString[i]))
         }
 
-        val adapter = SliderAdapter(requireContext(), sliderDataArrayList)
+        val adapter = SliderAdapterHome(requireContext(), sliderDataArrayList)
 
         sliderView.autoCycleDirection = SliderView.LAYOUT_DIRECTION_LTR
         sliderView.setSliderAdapter(adapter)

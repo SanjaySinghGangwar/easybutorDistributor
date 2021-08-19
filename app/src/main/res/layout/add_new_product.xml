@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -15,11 +16,59 @@
 
             android:orientation="vertical">
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginBottom="5dp"
+                android:text="Add product images"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp">
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    app:cardCornerRadius="10dp"
+                    app:cardUseCompatPadding="true">
+
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recycler"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" />
+                    <com.google.android.material.floatingactionbutton.FloatingActionButton
+                        android:id="@+id/addImages"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="right"
+                        android:layout_marginTop="-10dp"
+                        android:layout_marginEnd="-10dp"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:src="@drawable/ic_add"
+                        android:tint="@color/white"
+                        app:elevation="6dp"
+                        app:tint="@color/white" />
+                </androidx.cardview.widget.CardView>
+
+
+            </FrameLayout>
+
             <com.google.android.material.textfield.TextInputLayout
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="15dp">
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="15dp">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/productName"
@@ -29,88 +78,6 @@
                     android:inputType="textPersonName" />
             </com.google.android.material.textfield.TextInputLayout>
 
-            <TextView
-                android:id="@+id/textView2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="15dp"
-                android:text="Add product images" />
-
-            <HorizontalScrollView
-                android:layout_width="match_parent"
-                android:layout_height="200dp">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-
-                    <ImageView
-                        android:id="@+id/imageOne"
-                        android:layout_width="150dp"
-                        android:layout_height="match_parent"
-                        android:layout_margin="10dp"
-
-                        android:src="@drawable/ic_default_product" />
-
-                    <ImageView
-                        android:id="@+id/imageTwo"
-                        android:layout_width="150dp"
-                        android:layout_height="match_parent"
-                        android:layout_margin="10dp"
-                        android:layout_marginEnd="10dp"
-                        android:src="@drawable/ic_default_product" />
-
-                    <ImageView
-                        android:id="@+id/imageThree"
-                        android:layout_width="150dp"
-                        android:layout_height="match_parent"
-                        android:layout_margin="10dp"
-                        android:layout_marginEnd="10dp"
-                        android:src="@drawable/ic_default_product" />
-
-                    <ImageView
-                        android:id="@+id/imageFour"
-                        android:layout_width="150dp"
-                        android:layout_height="match_parent"
-                        android:layout_margin="10dp"
-                        android:layout_marginEnd="10dp"
-                        android:src="@drawable/ic_default_product" />
-
-                    <ImageView
-                        android:id="@+id/imageFive"
-                        android:layout_width="150dp"
-                        android:layout_height="match_parent"
-                        android:layout_margin="10dp"
-                        android:layout_marginEnd="10dp"
-                        android:src="@drawable/ic_default_product" />
-
-                    <ImageView
-                        android:id="@+id/imageSix"
-                        android:layout_width="150dp"
-                        android:layout_height="match_parent"
-                        android:layout_margin="10dp"
-                        android:layout_marginEnd="10dp"
-                        android:src="@drawable/ic_default_product" />
-
-                    <ImageView
-                        android:id="@+id/imageSeven"
-                        android:layout_width="150dp"
-                        android:layout_height="match_parent"
-                        android:layout_margin="10dp"
-                        android:layout_marginEnd="10dp"
-                        android:src="@drawable/ic_default_product" />
-
-                    <ImageView
-                        android:id="@+id/imageEight"
-                        android:layout_width="150dp"
-                        android:layout_height="match_parent"
-                        android:layout_margin="10dp"
-                        android:layout_marginEnd="10dp"
-                        android:src="@drawable/ic_default_product" />
-
-                </LinearLayout>
-            </HorizontalScrollView>
-
             <Spinner
                 android:id="@+id/category"
                 android:layout_width="match_parent"
@@ -118,7 +85,10 @@
                 android:layout_marginLeft="15dp"
                 android:layout_marginTop="15dp"
                 android:layout_marginRight="15dp"
-                android:entries="@array/categories" />
+                android:background="@drawable/same_bg"
+                android:entries="@array/categories"
+                android:paddingTop="18dp"
+                android:paddingBottom="18dp" />
 
             <Spinner
                 android:id="@+id/subCategory"

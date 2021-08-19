@@ -1,25 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:weightSum="10"
     tools:context=".ui.Products.ViewProducts.ProductDetail">
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:layout_weight="10">
 
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginBottom="50dp"
             android:orientation="vertical"
             android:weightSum="10">
+
+            <TextView
+                android:id="@+id/name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginRight="15dp"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+
             <com.smarteist.autoimageslider.SliderView
                 android:id="@+id/slider"
                 android:layout_width="match_parent"
-                android:layout_height="450dp"
+                android:layout_height="500dp"
                 android:layout_centerInParent="true"
 
                 android:layout_marginTop="10dp"
@@ -33,84 +45,17 @@
                 app:sliderIndicatorOrientation="horizontal"
                 app:sliderIndicatorPadding="3dp"
                 app:sliderIndicatorRadius="2dp"
-                app:sliderIndicatorSelectedColor="@color/amazon"
-                app:sliderIndicatorUnselectedColor="@color/grey"
+                app:sliderIndicatorSelectedColor="@color/grey"
+                app:sliderIndicatorUnselectedColor="@color/lightgrey"
                 app:sliderScrollTimeInSec="2" />
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recycler"
-                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="300dp"
+                android:visibility="gone"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 tools:listitem="@layout/product_image_layout" />
-
-            <HorizontalScrollView
-                android:layout_width="match_parent"
-                android:layout_height="300dp"
-                android:visibility="gone">
-
-                <LinearLayout
-
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent">
-
-                    <ImageView
-                        android:id="@+id/imageOne"
-                        android:layout_width="300dp"
-                        android:layout_height="match_parent"
-                        android:src="@drawable/ic_default_product" />
-
-                    <ImageView
-                        android:id="@+id/imageTwo"
-                        android:layout_width="300dp"
-                        android:layout_height="match_parent"
-                        android:src="@drawable/ic_default_product"
-                        android:visibility="gone" />
-
-                    <ImageView
-                        android:id="@+id/imagethree"
-                        android:layout_width="300dp"
-                        android:layout_height="match_parent"
-                        android:src="@drawable/ic_default_product"
-                        android:visibility="gone" />
-
-                    <ImageView
-                        android:id="@+id/imageFour"
-                        android:layout_width="300dp"
-                        android:layout_height="match_parent"
-                        android:src="@drawable/ic_default_product"
-                        android:visibility="gone" />
-
-                    <ImageView
-                        android:id="@+id/imageFive"
-                        android:layout_width="300dp"
-                        android:layout_height="match_parent"
-                        android:src="@drawable/ic_default_product"
-                        android:visibility="gone" />
-
-                    <ImageView
-                        android:id="@+id/imageSix"
-                        android:layout_width="300dp"
-                        android:layout_height="match_parent"
-                        android:src="@drawable/ic_default_product"
-                        android:visibility="gone" />
-
-                    <ImageView
-                        android:id="@+id/imageSeven"
-                        android:layout_width="300dp"
-                        android:layout_height="match_parent"
-                        android:src="@drawable/ic_default_product"
-                        android:visibility="gone" />
-
-                    <ImageView
-                        android:id="@+id/imageEight"
-                        android:layout_width="300dp"
-                        android:layout_height="match_parent"
-                        android:src="@drawable/ic_default_product"
-                        android:visibility="gone" />
-
-                </LinearLayout>
-            </HorizontalScrollView>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -120,12 +65,6 @@
                 android:layout_marginRight="15dp"
                 android:layout_weight="7"
                 android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/name"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
                 <TextView
                     android:id="@+id/shortDescription"
@@ -198,7 +137,7 @@
     <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
+        android:layout_weight="1"
         android:orientation="horizontal">
 
         <TextView
@@ -211,7 +150,6 @@
             android:gravity="center"
             android:padding="15dp"
             android:text="Edit"
-            android:textColor="@color/white"
-            android:visibility="gone" />
+            android:textColor="@color/white" />
     </androidx.appcompat.widget.LinearLayoutCompat>
-</FrameLayout>
+</androidx.appcompat.widget.LinearLayoutCompat>

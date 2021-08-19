@@ -1,6 +1,5 @@
 package com.thedramaticcolumnist.appdistributor.mAdapter;
 
-
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,21 +15,28 @@ import com.thedramaticcolumnist.appdistributor.models.SliderData;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SliderAdapter extends SliderViewAdapter<SliderAdapter.SliderAdapterViewHolder> {
+public class SliderAdapterHome extends SliderViewAdapter<SliderAdapterHome.SliderAdapterHomeViewHolder> {
 
 
     private final List<SliderData> mSliderItems;
 
-    public SliderAdapter(Context context, ArrayList<SliderData> sliderDataArrayList) {
+    public SliderAdapterHome(Context context, ArrayList<SliderData> sliderDataArrayList) {
         this.mSliderItems = sliderDataArrayList;
     }
+
     @Override
-    public SliderAdapterViewHolder onCreateViewHolder(ViewGroup parent) {
-        View inflate = LayoutInflater.from(parent.getContext()).inflate(R.layout.slider_layout_home, null);
-        return new SliderAdapterViewHolder(inflate);
+    public int getCount() {
+        return mSliderItems.size();
     }
+
     @Override
-    public void onBindViewHolder(SliderAdapterViewHolder viewHolder, final int position) {
+    public SliderAdapterHomeViewHolder onCreateViewHolder(ViewGroup parent) {
+        View inflate = LayoutInflater.from(parent.getContext()).inflate(R.layout.slider_layout, null);
+        return new SliderAdapterHomeViewHolder(inflate);
+    }
+
+    @Override
+    public void onBindViewHolder(SliderAdapterHomeViewHolder viewHolder, int position) {
 
         final SliderData sliderItem = mSliderItems.get(position);
 
@@ -40,20 +46,16 @@ public class SliderAdapter extends SliderViewAdapter<SliderAdapter.SliderAdapter
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .into(viewHolder.imageViewBackground);
     }
-    @Override
-    public int getCount() {
-        return mSliderItems.size();
-    }
 
-    static class SliderAdapterViewHolder extends SliderViewAdapter.ViewHolder {
+
+    static class SliderAdapterHomeViewHolder extends SliderViewAdapter.ViewHolder {
         View itemView;
         ImageView imageViewBackground;
 
-        public SliderAdapterViewHolder(View itemView) {
+        public SliderAdapterHomeViewHolder(View itemView) {
             super(itemView);
             imageViewBackground = itemView.findViewById(R.id.myimage);
             this.itemView = itemView;
         }
     }
 }
-

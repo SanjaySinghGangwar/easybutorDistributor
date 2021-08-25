@@ -58,6 +58,7 @@ class EditProfile(private val name: String, private val phone: String, private v
             .load(image!!)
             .placeholder(R.drawable.ic_person)
             .diskCacheStrategy(DiskCacheStrategy.ALL)
+            .error(R.drawable.ic_error)
             .into(bind.image)
         bind.update.setOnClickListener(this)
         bind.image.setOnClickListener(this)
@@ -115,6 +116,7 @@ class EditProfile(private val name: String, private val phone: String, private v
                         .load(data!!.data)
                         .placeholder(R.drawable.ic_person)
                         .diskCacheStrategy(DiskCacheStrategy.ALL)
+                        .error(R.drawable.ic_error)
                         .into(bind.image)
                     saveProductImage(data.data)
                 }

@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.navArgs
@@ -33,7 +34,7 @@ class ViewCategoryProducts : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
-    ): View? {
+    ): View {
         _binding = ViewCategoryProductsBinding.inflate(inflater, container, false)
         return bind.root
     }
@@ -45,13 +46,7 @@ class ViewCategoryProducts : Fragment() {
     }
 
     private fun setUpToolbar() {
-
-
-       /* mToolbar = rootView.findViewById(R.id.toolbar_home) as Toolbar
-        if (mToolbar != null) {
-            setSupportActionBar(mToolbar)
-        }
-        mToolbar.setTitle(null)*/
+        (activity as AppCompatActivity).supportActionBar?.title = args.category
     }
 
 

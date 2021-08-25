@@ -4,12 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.webkit.WebSettings
-import android.webkit.WebView
-import android.webkit.WebViewClient
-import android.widget.TextView
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import com.firebase.ui.database.FirebaseRecyclerAdapter
@@ -21,12 +16,15 @@ import com.thedramaticcolumnist.appdistributor.databinding.OrderItemLayoutBindin
 import com.thedramaticcolumnist.appdistributor.mViewHolder.OrderViewHolder
 import com.thedramaticcolumnist.appdistributor.models.ProductModel
 
-class OrderFragment : Fragment() {
+class OrderFragment : Fragment(), View.OnClickListener {
 
     private lateinit var orderViewModel: OrderViewModel
     private var _binding: OrderFragmentBinding? = null
-private val bind get() = _binding!!
+    private val bind get() = _binding!!
     lateinit var recyclerAdapter: FirebaseRecyclerAdapter<ProductModel, OrderViewHolder>
+
+    private var productModel: ProductModel? = null
+    private var productViewHolder: OrderViewHolder? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -42,6 +40,7 @@ private val bind get() = _binding!!
 
         return root
     }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initAllComponent()
@@ -50,7 +49,9 @@ private val bind get() = _binding!!
     }
 
     private fun initAllComponent() {
-
+        bind.inTransit.setOnClickListener(this)
+        bind.shipped.setOnClickListener(this)
+        bind.delivered.setOnClickListener(this)
     }
 
     private fun showCartData() {
@@ -77,12 +78,16 @@ private val bind get() = _binding!!
                     position: Int,
                     model: ProductModel,
                 ) {
-                    bind.temp.visibility= View.INVISIBLE
-                    bind.list.visibility= View.VISIBLE
+                    bind.temp.visibility = View.INVISIBLE
+                    bind.list.visibility = View.VISIBLE
 
-                    holder.bind(model)
-                    holder.card.setOnClickListener{
-                        val action = OrderFragmentDirections.orderToOrderDetail(getRef(position).key.toString())
+                    productModel = model
+                    productViewHolder = holder
+
+                    productViewHolder!!.bind(productModel!!)
+                    productViewHolder!!.card.setOnClickListener {
+                        val action =
+                            OrderFragmentDirections.orderToOrderDetail(getRef(position).key.toString())
                         view?.findNavController()?.navigate(action)
                     }
 
@@ -93,9 +98,14 @@ private val bind get() = _binding!!
         recyclerAdapter.startListening()
 
     }
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    override fun onClick(v: View?) {
+
     }
 
 

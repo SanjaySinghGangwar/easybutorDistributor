@@ -97,6 +97,7 @@ class HomeScreen : AppCompatActivity(), View.OnClickListener {
                         .load(snapshot.child("profile_image").value.toString())
                         .placeholder(R.drawable.ic_person)
                         .diskCacheStrategy(DiskCacheStrategy.ALL)
+                        .error(R.drawable.ic_error)
                         .into(header.findViewById(R.id.imageView))
                 }
 

@@ -1,12 +1,13 @@
 package com.thedramaticcolumnist.appdistributor.ui.Products.ViewProducts
 
-import com.thedramaticcolumnist.appdistributor.R
+import android.graphics.Paint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
-
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.navArgs
@@ -14,9 +15,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.database.*
 import com.smarteist.autoimageslider.SliderView
 import com.thedramaticcolumnist.appdistributor.DataBase.mDatabase.mID
+import com.thedramaticcolumnist.appdistributor.R
 import com.thedramaticcolumnist.appdistributor.Utils.mUtils.mToast
 import com.thedramaticcolumnist.appdistributor.databinding.ProductDetailBinding
-import com.thedramaticcolumnist.appdistributor.mAdapter.SliderAdapter
 import com.thedramaticcolumnist.appdistributor.mAdapter.SliderAdapterHome
 import com.thedramaticcolumnist.appdistributor.mAdapter.productImagesAdapter
 import com.thedramaticcolumnist.appdistributor.models.SliderData
@@ -56,6 +57,11 @@ class ProductDetail : Fragment(), View.OnClickListener {
         super.onViewCreated(view, savedInstanceState)
         initAllComponent()
         fetchProductDetail()
+        setupToolbar()
+    }
+
+    private fun setupToolbar() {
+        (activity as AppCompatActivity).supportActionBar?.title = " "
     }
 
     private fun initAllComponent() {
@@ -71,13 +77,13 @@ class ProductDetail : Fragment(), View.OnClickListener {
         productAdapter = productImagesAdapter(requireContext(), listOf(images))
         bind.recycler.adapter = productAdapter
         productAdapter!!.notifyDataSetChanged()
-
+        bind.mrp.paintFlags = bind.mrp.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
     }
 
     private fun setUpSlider() {
         val sliderDataArrayList: ArrayList<SliderData> = ArrayList()
         val sliderView: SliderView = bind.slider
-        for(i in splitString.indices){
+        for (i in splitString.indices) {
             sliderDataArrayList.add(SliderData(splitString[i]))
         }
 
@@ -89,6 +95,7 @@ class ProductDetail : Fragment(), View.OnClickListener {
         sliderView.isAutoCycle = true
         sliderView.startAutoCycle()
     }
+
     private fun fetchProductDetail() {
         myRef.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
@@ -99,8 +106,6 @@ class ProductDetail : Fragment(), View.OnClickListener {
                     images = dataSnapshot.child("image").value.toString()
                     stringToArray(images.substring(1, images.length - 1));
                     setUpSlider()
-
-
                 }
 
                 if (dataSnapshot.hasChild("long_description")) {
@@ -112,8 +117,9 @@ class ProductDetail : Fragment(), View.OnClickListener {
                 }
                 if (dataSnapshot.hasChild("product_name")) {
                     bind.name.text = dataSnapshot.child("product_name").value.toString()
-
-
+                    bind.name.visibility = GONE
+                    (activity as AppCompatActivity).supportActionBar?.title =
+                        dataSnapshot.child("product_name").value.toString()
                 }
                 if (dataSnapshot.hasChild("seller")) {
                     if (dataSnapshot.child("seller").value.toString() == mID) {
@@ -140,7 +146,8 @@ class ProductDetail : Fragment(), View.OnClickListener {
                     val price = dataSnapshot.child("price").value.toString()
                     val mrp = dataSnapshot.child("mrp").value.toString()
                     bind.discount.text =
-                        100.minus((price.toFloat() / mrp.toFloat()) * 100).roundToInt().toString()+" %"
+                        100.minus((price.toFloat() / mrp.toFloat()) * 100).roundToInt()
+                            .toString() + " %"
                 }
             }
 

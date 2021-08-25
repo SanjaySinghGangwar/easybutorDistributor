@@ -5,6 +5,7 @@ import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.thedramaticcolumnist.appdistributor.R
 import com.thedramaticcolumnist.appdistributor.databinding.CategoryLayoutBinding
 import com.thedramaticcolumnist.appdistributor.models.ProductModel
 
@@ -20,6 +21,6 @@ class CategoryViewHolder(
     fun bind(item: ProductModel) {
         this.items = item
         itemBinding.name.text = item.name
-        Glide.with(context).load(item.icon).diskCacheStrategy(DiskCacheStrategy.ALL).into(itemBinding.image);
+        Glide.with(context).load(item.icon).diskCacheStrategy(DiskCacheStrategy.ALL) .error(R.drawable.ic_error).into(itemBinding.image);
     }
 }

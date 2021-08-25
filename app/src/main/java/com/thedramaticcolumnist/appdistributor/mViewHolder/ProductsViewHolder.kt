@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.thedramaticcolumnist.appdistributor.DataBase.mDatabase.uID
+import com.thedramaticcolumnist.appdistributor.R
 import com.thedramaticcolumnist.appdistributor.databinding.ProductLayoutBinding
 import com.thedramaticcolumnist.appdistributor.models.ProductModel
 
@@ -33,6 +34,6 @@ class ProductsViewHolder(
         }
 
 
-        Glide.with(context).load(item.image_one).diskCacheStrategy(DiskCacheStrategy.ALL).into(itemBinding.image);
+        Glide.with(context).load(item.image_one).diskCacheStrategy(DiskCacheStrategy.ALL) .error(R.drawable.ic_error).into(itemBinding.image);
     }
 }

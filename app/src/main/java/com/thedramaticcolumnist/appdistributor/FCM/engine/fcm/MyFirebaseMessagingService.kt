@@ -79,7 +79,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
             NOTIFICATION_CHANNEL_ID,
             intent,
             PendingIntent.FLAG_ONE_SHOT)
-        val name: CharSequence = "Tmark"
+        val name: CharSequence = "EasyButor"
         val description = "Notification"
         val importance = NotificationManager.IMPORTANCE_HIGH
         val channel = NotificationChannel(NOTIFICATION_CHANNEL_ID.toString(), name, importance)

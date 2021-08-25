@@ -26,6 +26,7 @@ class productImagesAdapter(private val context: Context, private val splitString
             .load(splitString[position])
             .error(R.drawable.ic_default_product)
             .diskCacheStrategy(DiskCacheStrategy.ALL)
+            .error(R.drawable.ic_error)
             .into(holder.imageView);
     }
 

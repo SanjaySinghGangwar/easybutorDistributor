@@ -124,6 +124,7 @@ class OrderDetail : Fragment(), View.OnClickListener {
                     .load(snapshot.child("image_one").value.toString())
                     .placeholder(R.drawable.ic_default_product)
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
+                    .error(R.drawable.ic_error)
                     .into(bind.image);
                 getDetailsOfProductsFromInventory()
             }

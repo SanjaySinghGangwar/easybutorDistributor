@@ -41,30 +41,10 @@
     </fragment>
 
     <fragment
-        android:id="@+id/nav_admin_panel"
-        android:name="com.thedramaticcolumnist.appdistributor.ui.WishList.AdminPanelFragment"
-        android:label="@string/menu_slideshow"
-        tools:layout="@layout/admin_panel_fragment" />
-    <fragment
         android:id="@+id/nav_account"
         android:name="com.thedramaticcolumnist.appdistributor.ui.YourAccount.YourAccount"
         android:label="@string/menu_account"
         tools:layout="@layout/your_account_fragment" />
-    <fragment
-        android:id="@+id/nav_customer_service"
-        android:name="com.thedramaticcolumnist.appdistributor.ui.CustomerService.CustomerService"
-        android:label="@string/menu_customer_service"
-        tools:layout="@layout/customer_fragment" />
-    <fragment
-        android:id="@+id/nav_category"
-        android:name="com.thedramaticcolumnist.appdistributor.ui.Category.CategoryFragment"
-        android:label="@string/menu_category"
-        tools:layout="@layout/category_fragment" />
-    <fragment
-        android:id="@+id/nav_registration"
-        android:name="com.thedramaticcolumnist.appdistributor.ui.Distributor.RegistratoionFragment"
-        android:label="@string/menu_distributor"
-        tools:layout="@layout/registration_fragment" />
     <fragment
         android:id="@+id/nav_products"
         android:name="com.thedramaticcolumnist.appdistributor.ui.Products.ProductsFragment"
@@ -83,11 +63,6 @@
         android:name="com.thedramaticcolumnist.appdistributor.ui.VendorAddPorduct.VendorAddProducts"
         android:label="Add Products"
         tools:layout="@layout/vendor_add_products" />
-    <fragment
-        android:id="@+id/nav_setting"
-        android:name="com.thedramaticcolumnist.appdistributor.ui.Setting.Setting"
-        android:label="Settings"
-        tools:layout="@layout/setting" />
     <fragment
         android:id="@+id/nav_profile"
         android:name="com.thedramaticcolumnist.appdistributor.ui.Profile.MyProfile"
@@ -127,16 +102,6 @@
             app:argType="string"
             app:nullable="true" />
     </fragment>
-    <fragment
-        android:id="@+id/nav_message"
-        android:name="com.thedramaticcolumnist.appdistributor.ui.Messages.Message"
-        android:label="Messages"
-        tools:layout="@layout/message" />
-    <fragment
-        android:id="@+id/nav_dash"
-        android:name="com.thedramaticcolumnist.appdistributor.ui.Dashboard.Dashboard"
-        android:label="Dashboard"
-        tools:layout="@layout/dashboard" />
 
     <fragment
         android:id="@+id/productDetail"
@@ -175,7 +140,7 @@
     <fragment
         android:id="@+id/orderDetail"
         android:name="com.thedramaticcolumnist.appdistributor.ui.OrderDetail.OrderDetail"
-        android:label="order_detail"
+        android:label="Order Detail"
         tools:layout="@layout/order_detail">
         <argument
             android:name="id"

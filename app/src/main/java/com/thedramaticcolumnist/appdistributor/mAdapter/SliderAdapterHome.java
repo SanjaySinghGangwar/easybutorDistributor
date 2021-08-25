@@ -44,6 +44,7 @@ public class SliderAdapterHome extends SliderViewAdapter<SliderAdapterHome.Slide
                 .load(sliderItem.getImgUrl())
                 .fitCenter()
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .error(R.drawable.ic_error)
                 .into(viewHolder.imageViewBackground);
     }
 

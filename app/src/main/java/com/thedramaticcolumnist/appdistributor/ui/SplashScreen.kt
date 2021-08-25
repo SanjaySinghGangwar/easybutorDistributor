@@ -23,18 +23,16 @@ class SplashScreen : AppCompatActivity() {
     }
 
     private fun moveToNextPage() {
-        Timer().schedule(5000) {
+        Timer().schedule(3000) {
             val user = Firebase.auth.currentUser
-            if (user != null) {
-                intent = Intent(this@SplashScreen, HomeScreen::class.java)
-                startActivity(intent)
-                finish()
+            intent = if (user != null) {
+                Intent(this@SplashScreen, HomeScreen::class.java)
             } else {
-                intent = Intent(this@SplashScreen, Login::class.java)
-                startActivity(intent)
-                finish()
+                Intent(this@SplashScreen, Login::class.java)
             }
-            //overridePendingTransition(R.anim.fadein,R.anim.fadeout);
+            startActivity(intent)
+            finish()
+
         }
     }
 

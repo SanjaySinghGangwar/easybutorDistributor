@@ -1,8 +1,10 @@
 package com.thedramaticcolumnist.appdistributor.DataBase
 
+import android.content.Context
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage
+import com.thedramaticcolumnist.appdistributor.FCM.Notification.sendNotification
 
 object mDatabase {
 
@@ -27,19 +29,26 @@ object mDatabase {
         updatedQuantity: String,
         orderUpdateNode: String,
         orderStatus: HashMap<String, String>,
+        token: String,
+        context: Context,
     ) {
         mProducts.child(productID).child("quantity").setValue(updatedQuantity)
             .addOnFailureListener { }
             .addOnSuccessListener {
-                updateOrderStatus(orderUpdateNode, orderStatus)
+                updateOrderStatus(orderUpdateNode, orderStatus,token,context)
             }
     }
 
-    fun updateOrderStatus(orderUpdateNode: String, orderStatus: HashMap<String, String>) {
+    fun updateOrderStatus(
+        orderUpdateNode: String,
+        orderStatus: HashMap<String, String>,
+        token: String,
+        context: Context,
+    ) {
         myOrder.child(orderUpdateNode).child("Status").setValue(orderStatus)
             .addOnFailureListener { }
             .addOnSuccessListener {
-                //sendNotification
+                sendNotification("order", "Status updated for order", token, context)
             }
     }
 }

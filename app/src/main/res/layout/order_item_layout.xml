@@ -43,6 +43,7 @@
 
 
                 <TextView
+                    android:textColor="@color/amazon"
                     android:id="@+id/price"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -60,7 +61,7 @@
                     android:textStyle="bold" />
 
                 <TextView
-
+                    android:textColor="@color/amazon"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
@@ -71,12 +72,25 @@
                     android:id="@+id/quantity"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="Status"
+                    android:textColor="@color/amazon"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/OrderStatus"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
             </LinearLayout>
 
             <ImageView
                 android:id="@+id/image"
                 android:layout_width="100dp"
-                android:layout_height="100dp"
+                android:layout_height="match_parent"
                 android:scaleType="fitCenter"
                 app:srcCompat="@drawable/ic_default_product" />
         </LinearLayout>

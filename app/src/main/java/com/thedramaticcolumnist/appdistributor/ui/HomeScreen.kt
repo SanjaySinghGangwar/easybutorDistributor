@@ -1,8 +1,6 @@
 package com.thedramaticcolumnist.appdistributor.ui
 
 import android.os.Bundle
-import android.view.Menu
-import android.view.MenuItem
 import android.view.View
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
@@ -47,25 +45,18 @@ class HomeScreen : AppCompatActivity(), View.OnClickListener {
         // menu should be considered as top level destinations.
         appBarConfiguration = AppBarConfiguration(setOf(
             R.id.nav_home,
-            R.id.nav_dash,
             R.id.nav_order,
             R.id.nav_add_new_product,
-            R.id.nav_admin_panel,
-            R.id.nav_message,
-            R.id.nav_category,
             R.id.nav_products,
-            R.id.nav_registration,
             R.id.nav_profile,
-            R.id.nav_setting,
             R.id.nav_account,
-            R.id.nav_customer_service
+            R.id.nav_revenue,
         ), drawerLayout)
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
 
         setUpProfileData()
     }
-
 
 
     override fun onSupportNavigateUp(): Boolean {
@@ -81,6 +72,7 @@ class HomeScreen : AppCompatActivity(), View.OnClickListener {
             }
         }
     }
+
     private fun setUpProfileData() {
         val header = binding.navView.getHeaderView(0);
         header.findViewById<TextView>(R.id.email).text =

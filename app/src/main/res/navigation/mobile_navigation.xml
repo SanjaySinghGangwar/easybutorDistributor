@@ -146,4 +146,9 @@
             android:name="id"
             app:argType="string" />
     </fragment>
+    <fragment
+        android:id="@+id/nav_revenue"
+        android:name="com.thedramaticcolumnist.appdistributor.ui.revenue.MyRevenue"
+        android:label="My Revenue"
+        tools:layout="@layout/my_revenue" />
 </navigation>

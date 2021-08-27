@@ -11,14 +11,14 @@
     <string name="menu_home">Home</string>
     <string name="menu_gallery">My Orders</string>
     <string name="menu_slideshow">Admin Panel</string>
-    <string name="menu_account">Your Account</string>
+    <string name="menu_account">My Account</string>
     <string name="menu_customer_service">Customer Service</string>
     <string name="cart">Cart</string>
     <string name="menu_category">Category</string>
     <string name="menu_distributor">Registration</string>
     <string name="menu_products">My Products</string>
     <string name="menu_setting">Settings</string>
-    <string name="menu_payment">My Account</string>
+    <string name="menu_revenue">My Revenue</string>
     <string name="menu_add_new">Add new product</string>
     <string name="menu_messages">Messages</string>
     <string name="menu_dash">Dashboard</string>

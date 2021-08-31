@@ -55,7 +55,7 @@
                             android:textColor="@color/amazon" />
 
                         <TextView
-                            android:id="@+id/totalOrder"
+                            android:id="@+id/monthOrder"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="0" />

@@ -12,10 +12,12 @@ import com.firebase.ui.database.FirebaseRecyclerAdapter
 import com.firebase.ui.database.FirebaseRecyclerOptions
 import com.thedramaticcolumnist.appdistributor.DataBase.mDatabase.mID
 import com.thedramaticcolumnist.appdistributor.DataBase.mDatabase.mProducts
+import com.thedramaticcolumnist.appdistributor.Utils.mUtils.mToast
 import com.thedramaticcolumnist.appdistributor.databinding.ProductLayoutBinding
 import com.thedramaticcolumnist.appdistributor.databinding.ProductsFragmentBinding
 import com.thedramaticcolumnist.appdistributor.mViewHolder.ProductsViewHolder
 import com.thedramaticcolumnist.appdistributor.models.ProductModel
+import com.thedramaticcolumnist.appdistributor.ui.BottomSheet.confirmation.DeleteConfirmation
 
 class ProductsFragment : Fragment() {
 
@@ -99,10 +101,11 @@ class ProductsFragment : Fragment() {
                         val action = ProductsFragmentDirections.productsToProductDetail(getRef(position).key.toString())
                         view?.findNavController()?.navigate(action)
                     }
-
+                    holder.delete.setOnClickListener{
+                        val delete=DeleteConfirmation(getRef(position).key.toString())
+                        delete.showNow(parentFragmentManager,"show")
+                    }
                 }
-
-
             }
 
         bind.recycler.adapter = recyclerAdapter

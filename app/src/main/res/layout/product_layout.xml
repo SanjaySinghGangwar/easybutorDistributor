@@ -5,6 +5,7 @@
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
+
     <androidx.cardview.widget.CardView
         android:id="@+id/card"
         android:layout_width="match_parent"
@@ -55,6 +56,21 @@
                 android:text="In-Stock : "
                 android:visibility="gone" />
         </LinearLayout>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/delete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:layout_marginTop="-10dp"
+            android:layout_marginEnd="-10dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:src="@drawable/ic_delete"
+            android:tint="@color/white"
+            android:visibility="gone"
+            app:elevation="6dp"
+            app:tint="@color/white" />
     </androidx.cardview.widget.CardView>
 
 

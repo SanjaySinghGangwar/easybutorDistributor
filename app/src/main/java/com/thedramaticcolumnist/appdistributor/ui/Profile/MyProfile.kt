@@ -139,12 +139,6 @@ class MyProfile : Fragment(), View.OnClickListener {
         }
     }
 
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-    }
-
     override fun onClick(v: View?) {
         when (v?.id) {
             R.id.edit -> {

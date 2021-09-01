@@ -29,7 +29,6 @@ class ProductsViewHolder(
         itemBinding.price.text = "₹ " + item.price
         if (item.seller == uID) {
             itemBinding.stock.visibility = VISIBLE
-            itemBinding.delete.visibility = VISIBLE
             itemBinding.stock.text = "In-Stock : " + item.quantity
 
         }

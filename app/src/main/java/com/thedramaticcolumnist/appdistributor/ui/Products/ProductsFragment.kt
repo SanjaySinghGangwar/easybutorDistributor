@@ -3,6 +3,7 @@ package com.thedramaticcolumnist.appdistributor.ui.Products
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.VISIBLE
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -12,7 +13,6 @@ import com.firebase.ui.database.FirebaseRecyclerAdapter
 import com.firebase.ui.database.FirebaseRecyclerOptions
 import com.thedramaticcolumnist.appdistributor.DataBase.mDatabase.mID
 import com.thedramaticcolumnist.appdistributor.DataBase.mDatabase.mProducts
-import com.thedramaticcolumnist.appdistributor.Utils.mUtils.mToast
 import com.thedramaticcolumnist.appdistributor.databinding.ProductLayoutBinding
 import com.thedramaticcolumnist.appdistributor.databinding.ProductsFragmentBinding
 import com.thedramaticcolumnist.appdistributor.mViewHolder.ProductsViewHolder
@@ -74,8 +74,10 @@ class ProductsFragment : Fragment() {
     private fun initRecycler() {
         val option: FirebaseRecyclerOptions<ProductModel> =
             FirebaseRecyclerOptions.Builder<ProductModel>()
-                .setQuery(mProducts.orderByChild("seller").equalTo(mID),
-                    ProductModel::class.java)
+                .setQuery(
+                    mProducts.orderByChild("seller").equalTo(mID),
+                    ProductModel::class.java
+                )
                 .build()
         val recyclerAdapter =
             object : FirebaseRecyclerAdapter<ProductModel, ProductsViewHolder>(option) {
@@ -84,9 +86,11 @@ class ProductsFragment : Fragment() {
                     viewType: Int,
                 ): ProductsViewHolder {
                     val binding: ProductLayoutBinding =
-                        ProductLayoutBinding.inflate(LayoutInflater.from(parent.context),
+                        ProductLayoutBinding.inflate(
+                            LayoutInflater.from(parent.context),
                             parent,
-                            false)
+                            false
+                        )
                     return ProductsViewHolder(requireContext(), binding)
                 }
 
@@ -98,12 +102,14 @@ class ProductsFragment : Fragment() {
                     bind.progressBar.visibility = View.GONE
                     holder.bind(model)
                     holder.card.setOnClickListener {
-                        val action = ProductsFragmentDirections.productsToProductDetail(getRef(position).key.toString())
+                        val action =
+                            ProductsFragmentDirections.productsToProductDetail(getRef(position).key.toString())
                         view?.findNavController()?.navigate(action)
                     }
-                    holder.delete.setOnClickListener{
-                        val delete=DeleteConfirmation(getRef(position).key.toString())
-                        delete.showNow(parentFragmentManager,"show")
+                    holder.delete.visibility = VISIBLE
+                    holder.delete.setOnClickListener {
+                        val delete = DeleteConfirmation(getRef(position).key.toString())
+                        delete.showNow(parentFragmentManager, "show")
                     }
                 }
             }

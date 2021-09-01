@@ -144,7 +144,7 @@ class OrderFragment : Fragment(), View.OnClickListener, OrderAdapter.onClickList
             R.id.cancelled -> {
                 cancelledList.clear()
                 for (i in orderList.indices) {
-                    if (orderList[i].details.flag.toString() == "Cancelled by seller") {
+                    if (orderList[i].details.flag.toString() == "Cancelled by seller"||orderList[i].details.flag.toString() == "Cancelled by buyer") {
                         cancelledList.add(orderList[i])
                     }
                 }

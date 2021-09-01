@@ -82,6 +82,9 @@ class OrderDetail : Fragment(), View.OnClickListener {
                             "Cancelled by seller" -> {
                                 bind.decline.visibility = GONE
                                 bind.approve.visibility = GONE
+                            } "Cancelled by buyer" -> {
+                                bind.decline.visibility = GONE
+                                bind.approve.visibility = GONE
                             }
                         }
                     } else {

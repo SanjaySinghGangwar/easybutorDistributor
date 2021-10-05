@@ -48,11 +48,11 @@
                         android:background="@color/amazon" />
 
                     <TextView
-android:textColor="@color/amazon"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
                         android:text="Order ID"
+                        android:textColor="@color/amazon"
                         android:textStyle="bold" />
 
                     <TextView
@@ -74,30 +74,30 @@ android:textColor="@color/amazon"
                             android:orientation="vertical">
 
                             <TextView
-                                android:textColor="@color/amazon"
                                 android:id="@+id/shortDescription"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="10dp"
                                 android:text="Short description"
+                                android:textColor="@color/amazon"
                                 android:textStyle="bold" />
 
                             <TextView
-                                android:textColor="@color/amazon"
                                 android:id="@+id/price"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="10dp"
                                 android:drawableStart="@drawable/ic_rupee"
                                 android:text="Price"
+                                android:textColor="@color/amazon"
                                 android:textStyle="bold" />
 
                             <TextView
-                                android:textColor="@color/amazon"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="10dp"
                                 android:text="Quantity"
+                                android:textColor="@color/amazon"
                                 android:textStyle="bold" />
 
                             <TextView
@@ -107,11 +107,11 @@ android:textColor="@color/amazon"
 
 
                             <TextView
-                                android:textColor="@color/amazon"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="10dp"
                                 android:text="Date of purchase"
+                                android:textColor="@color/amazon"
                                 android:textStyle="bold" />
 
                             <TextView
@@ -129,11 +129,11 @@ android:textColor="@color/amazon"
                     </LinearLayout>
 
                     <TextView
-                        android:textColor="@color/amazon"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
                         android:text="Address"
+                        android:textColor="@color/amazon"
                         android:textStyle="bold" />
 
                     <TextView

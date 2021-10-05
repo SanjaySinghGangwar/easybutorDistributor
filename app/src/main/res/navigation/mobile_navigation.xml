@@ -101,6 +101,11 @@
             android:defaultValue='""'
             app:argType="string"
             app:nullable="true" />
+        <action
+            android:id="@+id/add_new_product_to_products"
+            app:destination="@id/nav_products"
+            app:popUpTo="@id/nav_add_new_product"
+            app:popUpToInclusive="true" />
     </fragment>
 
     <fragment

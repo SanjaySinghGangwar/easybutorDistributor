@@ -29,7 +29,5 @@
             android:id="@+id/nav_revenue"
             android:icon="@drawable/ic_rupee"
             android:title="@string/menu_revenue" />
-
-
     </group>
 </menu>

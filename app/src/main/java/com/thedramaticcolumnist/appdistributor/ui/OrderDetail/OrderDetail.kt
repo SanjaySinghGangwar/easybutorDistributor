@@ -70,7 +70,7 @@ class OrderDetail : Fragment(), View.OnClickListener {
                             "In-Transit" -> {
                                 bind.trackingLayout.visibility = VISIBLE
                                 bind.shippedLayout.visibility = VISIBLE
-                                bind.buttonText.text = "UPDATE"
+                                bind.buttonText.text = "EDIT"
 
                                 bind.trackingNumber.setText(snapshot.child("trackingNumber").value.toString())
                                 bind.companyName.setText(snapshot.child("companyName").value.toString())

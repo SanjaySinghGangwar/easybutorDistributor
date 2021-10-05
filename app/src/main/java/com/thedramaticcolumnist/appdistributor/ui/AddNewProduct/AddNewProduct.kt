@@ -9,8 +9,10 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.CompoundButton
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.gms.tasks.OnCompleteListener
@@ -25,6 +27,7 @@ import com.thedramaticcolumnist.appdistributor.DataBase.mDatabase.mProducts
 import com.thedramaticcolumnist.appdistributor.R
 import com.thedramaticcolumnist.appdistributor.Utils.PermissionUtil
 import com.thedramaticcolumnist.appdistributor.Utils.mUtils.getTimerStamp
+import com.thedramaticcolumnist.appdistributor.Utils.mUtils.hideKeyboard
 import com.thedramaticcolumnist.appdistributor.Utils.mUtils.hideLoader
 import com.thedramaticcolumnist.appdistributor.Utils.mUtils.isValidText
 import com.thedramaticcolumnist.appdistributor.Utils.mUtils.mLog
@@ -37,7 +40,8 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 
-class AddNewProduct : Fragment(), View.OnClickListener, AddNewProductImageAdapter.ItemListen {
+class AddNewProduct : Fragment(), View.OnClickListener, AddNewProductImageAdapter.ItemListen,
+    CompoundButton.OnCheckedChangeListener {
 
     private lateinit var addNewProductViewModel: AddNewProductViewModel
     private var _binding: AddNewProductBinding? = null
@@ -98,11 +102,13 @@ class AddNewProduct : Fragment(), View.OnClickListener, AddNewProductImageAdapte
 
                 if (dataSnapshot.hasChild("long_description")) {
                     bind.LongDescription.setText(
-                        dataSnapshot.child("long_description").value.toString())
+                        dataSnapshot.child("long_description").value.toString()
+                    )
                 }
                 if (dataSnapshot.hasChild("mrp")) {
                     bind.mrp.setText(
-                        dataSnapshot.child("mrp").value.toString())
+                        dataSnapshot.child("mrp").value.toString()
+                    )
                 }
                 if (dataSnapshot.hasChild("price")) {
                     bind.price.setText(dataSnapshot.child("price").value.toString())
@@ -114,7 +120,8 @@ class AddNewProduct : Fragment(), View.OnClickListener, AddNewProductImageAdapte
                 }
                 if (dataSnapshot.hasChild("short_description")) {
                     bind.shortDescription.setText(
-                        dataSnapshot.child("short_description").value.toString())
+                        dataSnapshot.child("short_description").value.toString()
+                    )
                 }
 
                 if (dataSnapshot.hasChild("quantity")) {
@@ -133,15 +140,18 @@ class AddNewProduct : Fragment(), View.OnClickListener, AddNewProductImageAdapte
 
     private fun setUpRecycler() {
         questionTwoAdapter = AddNewProductImageAdapter(requireContext(), this)
-        bind.recycler.layoutManager = LinearLayoutManager(requireContext(),
+        bind.recycler.layoutManager = LinearLayoutManager(
+            requireContext(),
             LinearLayoutManager.HORIZONTAL,
-            true)
+            true
+        )
         bind.recycler.adapter = questionTwoAdapter
     }
 
     private fun initAllComponent() {
         bind.submit.setOnClickListener(this)
         bind.addImages.setOnClickListener(this)
+        bind.same.setOnCheckedChangeListener(this)
     }
 
 
@@ -158,13 +168,16 @@ class AddNewProduct : Fragment(), View.OnClickListener, AddNewProductImageAdapte
             }
             R.id.submit -> {
                 if (isValidText(bind.productName.text.toString().trim(), bind.productName)
-                    && isValidText(bind.shortDescription.text.toString().trim(),
-                        bind.shortDescription)
+                    && isValidText(
+                        bind.shortDescription.text.toString().trim(),
+                        bind.shortDescription
+                    )
                     &&
                     isValidText(bind.LongDescription.text.toString().trim(), bind.LongDescription)
                     && isValidText(bind.mrp.text.toString().trim(), bind.mrp)
                     && isValidText(bind.price.text.toString().trim(), bind.price)
-                    && isValidText(bind.quantity.text.toString().trim(), bind.quantity
+                    && isValidText(
+                        bind.quantity.text.toString().trim(), bind.quantity
                     )
                 ) {
                     if (!bind.category.selectedItem.equals("Category")) {
@@ -194,7 +207,9 @@ class AddNewProduct : Fragment(), View.OnClickListener, AddNewProductImageAdapte
                                         "Added"
                                     }
                                     mToast(requireContext(), toast)
-                                    parentFragmentManager.popBackStack()
+                                    hideKeyboard(requireContext())
+                                    v.findNavController().navigate(R.id.add_new_product_to_products)
+                                    //parentFragmentManager.popBackStack()
                                 }.addOnFailureListener {
                                     mToast(requireContext(), it.message.toString())
                                 }
@@ -286,5 +301,16 @@ class AddNewProduct : Fragment(), View.OnClickListener, AddNewProductImageAdapte
 
     }
 
+    override fun onCheckedChanged(buttonView: CompoundButton, isChecked: Boolean) {
+        when (buttonView.id) {
+            R.id.same -> {
+                if (isChecked) {
+                    bind.price.setText(bind.mrp.text.toString())
+                } else {
+                    bind.price.setText("")
+                }
+            }
+        }
+    }
 
 }

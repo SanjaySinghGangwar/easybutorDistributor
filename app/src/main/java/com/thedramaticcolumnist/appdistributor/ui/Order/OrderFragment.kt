@@ -66,7 +66,7 @@ class OrderFragment : Fragment(), View.OnClickListener, OrderAdapter.onClickList
     }
 
     private fun getListFromFirebase() {
-        myOrder.addValueEventListener(object : ValueEventListener {
+        myOrder.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 tempList.clear()
                 for (data in snapshot.children) {

@@ -13,7 +13,7 @@ android {
         applicationId "com.thedramaticcolumnist.appdistributor"
         minSdkVersion 21
         targetSdkVersion 30
-        versionCode 5
+        versionCode 6
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -34,6 +34,21 @@ android {
     }
     buildFeatures {
         viewBinding true
+    }
+
+    signingConfigs {
+        release {
+            storeFile file(var)
+            storePassword 'Android@123'
+            keyAlias 'Sanjay'
+            keyPassword 'Android@123'
+        }
+        debug {
+            storeFile file(var)
+            storePassword 'Android@123'
+            keyAlias 'Sanjay'
+            keyPassword 'Android@123'
+        }
     }
 }
 

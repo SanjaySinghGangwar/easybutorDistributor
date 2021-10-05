@@ -1,10 +1,12 @@
 package com.thedramaticcolumnist.appdistributor.Utils
 
+import android.app.Activity
 import android.content.Context
 import android.text.TextUtils
 import android.util.Log
 import android.view.View.GONE
 import android.view.View.VISIBLE
+import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.ProgressBar
 import android.widget.Toast
@@ -12,6 +14,7 @@ import java.text.DateFormat
 import java.text.DecimalFormat
 import java.text.SimpleDateFormat
 import java.util.*
+
 
 object mUtils {
     fun mToast(context: Context, message: String) {
@@ -71,4 +74,12 @@ object mUtils {
         return outputFormatter.format(date)
     }
 
+    fun hideKeyboard(mContext: Context) {
+        val imm: InputMethodManager = mContext
+            .getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(
+            (mContext as Activity).window
+                .currentFocus!!.windowToken, 0
+        )
+    }
 }

@@ -1,8 +1,5 @@
 package com.thedramaticcolumnist.appdistributor.models;
 
-import com.google.gson.annotations.Expose;
-import com.google.gson.annotations.SerializedName;
-
 public class OrderDetailsModel {
 
     String address;
